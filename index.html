@@ -1,0 +1,1148 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>大巴扎 The Bazaar · S15 全职业攻略</title>
+<style>
+  /* ============ 设计令牌：夜巴扎 ============ */
+  :root{
+    --bg:#160F2B; --bg2:#1E1540; --panel:#241A4A; --panel2:#2C2158;
+    --line:rgba(232,180,90,.18); --line2:rgba(255,255,255,.08);
+    --ink:#F2EAD9; --muted:#9B92BC; --dim:#6E6694;
+    --brass:#E8B45A;
+    /* 物品/阶段沿用游戏内品阶色：青铜→白银→黄金→钻石→传说 */
+    --bronze:#C08552; --silver:#AEBBD0; --gold:#E8B45A; --diamond:#7FD6E8; --legend:#C77DFF;
+    --danger:#E87A7A; --ok:#8FD6A0;
+    --serif:"Songti SC","Noto Serif CJK SC","SimSun",serif;
+    --sans:"PingFang SC","Hiragino Sans GB","Microsoft YaHei",-apple-system,sans-serif;
+    --mono:ui-monospace,"SF Mono","Cascadia Mono",Consolas,monospace;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:15px;line-height:1.75;
+    background-image:radial-gradient(1200px 500px at 70% -10%, rgba(199,125,255,.10), transparent 60%),
+                     radial-gradient(900px 400px at 10% 0%, rgba(232,180,90,.08), transparent 55%);}
+  a{color:var(--diamond);text-decoration:none}
+  a:hover{text-decoration:underline}
+  .wrap{max-width:1060px;margin:0 auto;padding:0 20px}
+
+  /* ============ 顶栏 ============ */
+  header.site{padding:34px 0 18px;border-bottom:1px solid var(--line)}
+  .kicker{font-family:var(--mono);font-size:12px;letter-spacing:.22em;color:var(--brass);text-transform:uppercase}
+  h1.site-title{font-family:var(--serif);font-weight:700;font-size:clamp(28px,4.5vw,42px);letter-spacing:.04em;margin:6px 0 4px}
+  h1 .en{color:var(--muted);font-size:.55em;font-family:var(--mono);letter-spacing:.08em;font-weight:400;margin-left:.6em}
+  .site-sub{color:var(--muted);font-size:13.5px;max-width:760px}
+  .meta-badges{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+  .badge{font-family:var(--mono);font-size:12px;padding:4px 12px;border:1px solid var(--line);border-radius:3px;color:var(--brass);background:rgba(232,180,90,.06)}
+  .badge.soft{color:var(--muted);border-color:var(--line2);background:transparent}
+
+  /* ============ 导航 ============ */
+  nav.tabs{position:sticky;top:0;z-index:50;background:rgba(22,15,43,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line2)}
+  nav.tabs .wrap{display:flex;gap:2px;overflow-x:auto;padding-top:8px;padding-bottom:0;scrollbar-width:none}
+  nav.tabs .wrap::-webkit-scrollbar{display:none}
+  .tab{flex:0 0 auto;padding:9px 16px 11px;cursor:pointer;border:0;background:none;color:var(--muted);font-family:var(--sans);font-size:14px;border-bottom:2px solid transparent;white-space:nowrap;display:flex;align-items:center;gap:7px}
+  .tab .dot{width:7px;height:7px;border-radius:50%;background:var(--hue,var(--brass));opacity:.85}
+  .tab:hover{color:var(--ink)}
+  .tab.active{color:var(--ink);border-bottom-color:var(--hue,var(--brass))}
+  .tab .nick{font-size:11.5px;color:var(--dim)}
+
+  main{padding:28px 0 80px}
+  section.page{display:none}
+  section.page.active{display:block;animation:fadeUp .25s ease}
+  @keyframes fadeUp{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+  @media (prefers-reduced-motion:reduce){section.page.active{animation:none}}
+
+  /* ============ 通用排版 ============ */
+  h2{font-family:var(--serif);font-size:24px;letter-spacing:.05em;margin:34px 0 14px;display:flex;align-items:baseline;gap:10px}
+  h2 .en{font-family:var(--mono);font-size:12px;color:var(--dim);letter-spacing:.12em;font-weight:400}
+  h3{font-family:var(--serif);font-size:17px;letter-spacing:.04em;margin:0 0 8px}
+  p.lead{color:var(--muted);max-width:820px}
+  .panel{background:linear-gradient(180deg,var(--panel),var(--bg2));border:1px solid var(--line2);border-radius:8px;padding:18px 20px}
+  ul.plain{list-style:none}
+  ul.plain li{padding:5px 0 5px 18px;position:relative;color:var(--ink)}
+  ul.plain li::before{content:"";position:absolute;left:2px;top:14px;width:7px;height:7px;border:1.5px solid var(--brass);border-radius:1px;transform:rotate(45deg)}
+  ul.plain li .sub{color:var(--muted)}
+  table{border-collapse:collapse;width:100%;font-size:13.5px}
+  th,td{border:1px solid var(--line2);padding:8px 12px;text-align:left;vertical-align:top}
+  th{background:rgba(232,180,90,.07);font-family:var(--mono);font-size:12px;color:var(--brass);letter-spacing:.08em;font-weight:500}
+  td .mono{font-family:var(--mono);font-size:12.5px}
+
+  /* ============ 英雄页头 ============ */
+  .hero-head{border:1px solid var(--line2);border-left:3px solid var(--hue,var(--brass));border-radius:8px;padding:22px 24px;background:
+    linear-gradient(115deg, color-mix(in srgb, var(--hue,#E8B45A) 14%, var(--bg2)) 0%, var(--bg2) 55%)}
+  .hero-head .row{display:flex;flex-wrap:wrap;align-items:baseline;gap:14px}
+  .hero-name{font-family:var(--serif);font-size:32px;letter-spacing:.05em}
+  .hero-name .en{font-family:var(--mono);font-size:14px;color:var(--muted);letter-spacing:.1em;margin-left:10px}
+  .hero-nick{font-size:13px;color:var(--bg);background:var(--hue,var(--brass));padding:2px 10px;border-radius:3px;font-weight:600}
+  .hero-tags{margin-top:8px;color:var(--muted);font-size:13.5px}
+  .stat-row{display:flex;gap:26px;margin-top:14px;flex-wrap:wrap}
+  .stat .k{font-family:var(--mono);font-size:11px;letter-spacing:.15em;color:var(--dim)}
+  .stat .v{font-size:15px;color:var(--ink)}
+  .stat .v.tier{color:var(--brass);font-family:var(--mono);font-weight:700}
+  .pips{display:inline-flex;gap:3px;vertical-align:-1px}
+  .pip{width:9px;height:9px;border:1px solid var(--dim);transform:rotate(45deg)}
+  .pip.on{background:var(--hue,var(--brass));border-color:var(--hue,var(--brass))}
+  .s15-note{margin-top:14px;padding:10px 14px;border-left:2px solid var(--brass);background:rgba(232,180,90,.06);font-size:13.5px;color:var(--ink)}
+  .s15-note b{color:var(--brass)}
+
+  /* ============ 阶段轨道（签名元素）============ */
+  .rail{display:grid;grid-template-columns:repeat(3,1fr);gap:0;margin:30px 0 6px;border-radius:6px;overflow:hidden;border:1px solid var(--line2)}
+  .rail .seg{padding:10px 14px;font-family:var(--mono);font-size:12px;letter-spacing:.1em;display:flex;justify-content:space-between;gap:8px;color:var(--bg);font-weight:700}
+  .rail .seg span.days{font-weight:400;opacity:.8}
+  .rail .seg.e{background:linear-gradient(90deg,#9c6a3e,var(--bronze))}
+  .rail .seg.m{background:linear-gradient(90deg,#c79038,var(--gold))}
+  .rail .seg.l{background:linear-gradient(90deg,#54aec2,var(--diamond))}
+
+  .phase{margin:18px 0 26px;border:1px solid var(--line2);border-radius:8px;overflow:hidden}
+  .phase>header{padding:12px 18px;display:flex;align-items:baseline;gap:12px;border-bottom:1px solid var(--line2);background:rgba(255,255,255,.025)}
+  .phase>header .pname{font-family:var(--serif);font-size:18px}
+  .phase>header .pdays{font-family:var(--mono);font-size:12px;letter-spacing:.1em}
+  .phase.e>header .pdays{color:var(--bronze)} .phase.m>header .pdays{color:var(--gold)} .phase.l>header .pdays{color:var(--diamond)}
+  .phase .grid{display:grid;grid-template-columns:1.1fr 1fr;gap:0}
+  .phase .cell{padding:16px 18px}
+  .phase .cell+.cell{border-left:1px solid var(--line2)}
+  .phase .cell.full{grid-column:1/-1;border-top:1px solid var(--line2);border-left:0}
+  .cell .ct{font-family:var(--mono);font-size:11.5px;letter-spacing:.18em;color:var(--brass);margin-bottom:10px}
+  ol.shops{list-style:none;counter-reset:s}
+  ol.shops li{counter-increment:s;padding:6px 0 6px 34px;position:relative;border-bottom:1px dashed var(--line2)}
+  ol.shops li:last-child{border-bottom:0}
+  ol.shops li::before{content:counter(s);position:absolute;left:0;top:7px;width:22px;height:22px;border:1px solid var(--brass);border-radius:50%;color:var(--brass);font-family:var(--mono);font-size:11px;display:flex;align-items:center;justify-content:center}
+  ol.shops li .why{display:block;color:var(--muted);font-size:12.5px}
+
+  /* ============ 卡牌芯片：英文名 + 中文注释 ============ */
+  .cards{display:flex;flex-direction:column;gap:8px}
+  .card{display:grid;grid-template-columns:auto 1fr;gap:3px 12px;padding:8px 12px;border:1px solid var(--line2);border-left:3px solid var(--rolec,var(--silver));border-radius:5px;background:rgba(255,255,255,.02)}
+  .card .cname{font-family:var(--mono);font-size:13px;color:var(--ink);font-weight:600;grid-column:1}
+  .card .role{grid-column:2;justify-self:end;font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;color:var(--rolec,var(--silver));align-self:center}
+  .card .cn{grid-column:1/-1;font-size:12.5px;color:var(--muted)}
+  .card.r-core{--rolec:var(--legend)} .card.r-engine{--rolec:var(--gold)}
+  .card.r-filler{--rolec:var(--bronze)} .card.r-tech{--rolec:var(--diamond)} .card.r-skill{--rolec:var(--ok)}
+  .legend-roles{display:flex;gap:16px;flex-wrap:wrap;font-family:var(--mono);font-size:11px;color:var(--muted);margin:8px 0 0}
+  .legend-roles i{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:5px;vertical-align:-1px}
+
+  /* ============ 流派卡 ============ */
+  .builds{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:14px;margin-top:14px}
+  .build{border:1px solid var(--line2);border-radius:8px;padding:16px 18px;background:linear-gradient(180deg,rgba(255,255,255,.03),transparent)}
+  .build .bt{display:flex;justify-content:space-between;align-items:baseline;gap:10px;margin-bottom:6px}
+  .build .bt .btier{font-family:var(--mono);font-size:12px;color:var(--brass);border:1px solid var(--line);padding:1px 8px;border-radius:3px}
+  .build .onset{font-family:var(--mono);font-size:11.5px;color:var(--diamond);margin-bottom:8px}
+  .build p.desc{color:var(--muted);font-size:13px;margin-bottom:12px}
+  .bounds{margin-top:12px;display:grid;gap:6px;font-size:12.5px}
+  .bounds .b{padding:7px 10px;border-radius:4px}
+  .bounds .up{background:rgba(143,214,160,.08);border-left:2px solid var(--ok)}
+  .bounds .down{background:rgba(232,122,122,.08);border-left:2px solid var(--danger)}
+  .bounds b{font-family:var(--mono);font-size:11px;letter-spacing:.1em;margin-right:6px}
+  .bounds .up b{color:var(--ok)} .bounds .down b{color:var(--danger)}
+
+  /* ============ 上限/下限总评 ============ */
+  .hero-bounds{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px}
+  .hero-bounds .panel{border-top:2px solid var(--ok)}
+  .hero-bounds .panel.low{border-top-color:var(--danger)}
+  .hero-bounds .ct{font-family:var(--mono);font-size:11.5px;letter-spacing:.18em;margin-bottom:8px}
+  .hero-bounds .panel .ct{color:var(--ok)} .hero-bounds .panel.low .ct{color:var(--danger)}
+
+  /* ============ 梯队表 ============ */
+  .tierlist{display:flex;flex-direction:column;gap:10px;margin-top:14px}
+  .tierrow{display:grid;grid-template-columns:74px 1fr;border:1px solid var(--line2);border-radius:6px;overflow:hidden}
+  .tierrow .tl{display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-weight:700;font-size:16px;color:var(--bg)}
+  .tierrow .tr{padding:10px 14px;display:flex;gap:10px;flex-wrap:wrap;background:rgba(255,255,255,.02)}
+  .hero-chip{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--line2);border-radius:4px;padding:5px 12px;cursor:pointer;background:var(--bg2);color:var(--ink);font-size:13.5px}
+  .hero-chip:hover{border-color:var(--brass)}
+  .hero-chip .dot{width:8px;height:8px;border-radius:50%}
+
+  /* ============ 更新面板 ============ */
+  .update-box textarea{width:100%;min-height:130px;background:#100B22;color:#CFE8D8;border:1px solid var(--line2);border-radius:6px;font-family:var(--mono);font-size:12px;padding:12px;margin:10px 0}
+  .btnrow{display:flex;gap:10px;flex-wrap:wrap}
+  button.btn{font-family:var(--mono);font-size:12.5px;letter-spacing:.06em;padding:8px 16px;border-radius:4px;border:1px solid var(--brass);background:rgba(232,180,90,.1);color:var(--brass);cursor:pointer}
+  button.btn:hover{background:rgba(232,180,90,.2)}
+  button.btn.ghost{border-color:var(--line2);color:var(--muted);background:transparent}
+  .msg{font-family:var(--mono);font-size:12px;margin-top:8px}
+  .msg.ok{color:var(--ok)} .msg.err{color:var(--danger)}
+  code.k{font-family:var(--mono);font-size:12.5px;color:var(--brass);background:rgba(232,180,90,.08);padding:1px 6px;border-radius:3px}
+
+  footer.site{border-top:1px solid var(--line2);padding:22px 0 40px;color:var(--dim);font-size:12.5px}
+  footer .src{font-family:var(--mono)}
+
+  @media (max-width:760px){
+    .phase .grid{grid-template-columns:1fr}
+    .phase .cell+.cell{border-left:0;border-top:1px solid var(--line2)}
+    .hero-bounds{grid-template-columns:1fr}
+    .rail .seg span.days{display:none}
+  }
+  :focus-visible{outline:2px solid var(--brass);outline-offset:2px}
+</style>
+</head>
+<body>
+
+<header class="site">
+  <div class="wrap">
+    <div class="kicker">The Bazaar · Season 15 · 赛季初版本</div>
+    <h1 class="site-title">大巴扎七职业攻略集<span class="en">GRAND BAZAAR LEDGER</span></h1>
+    <p class="site-sub">覆盖全部 7 个英雄的前 / 中 / 后期抓牌顺序、进店顺序、路线目标与强度上下限。卡牌一律英文原名 + 中文注释，方便对照游戏内英文客户端。S15 数据不足处以 S12–S14 主流思路推演补全，并已标注。</p>
+    <div class="meta-badges" id="metaBadges"></div>
+  </div>
+</header>
+
+<nav class="tabs"><div class="wrap" id="tabBar"></div></nav>
+
+<main><div class="wrap" id="content"></div></main>
+
+<footer class="site">
+  <div class="wrap">
+    <div class="src" id="footSrc"></div>
+    <p style="margin-top:8px">本页为玩家自制攻略整理，与 Tempo 官方无关。卡牌强度随热修频繁变动，以游戏内实际描述为准。</p>
+  </div>
+</footer>
+
+<script>
+/* ════════════════════════════════════════════════════════════════════
+   ▼▼▼ 攻 略 数 据 区（GUIDE_DATA）▼▼▼
+   未来版本更新只需要改这一个对象（或把新 JSON 粘贴进页面底部的更新面板）。
+   页面所有内容均由此数据渲染，不需要动任何 HTML / CSS / 渲染代码。
+
+   字段速查：
+   meta            赛季号、数据日期、变更日志、数据来源
+   general         总览页：运营通识（天数节奏 / 商人 / 经济 / 打野）
+   tiers           职业梯队（数组，从高到低）
+   heroes[].builds 每职业 3 套 S15 主流流派；cards.role 取值：
+                   core=核心  engine=引擎  filler=过渡  tech=反制/工具  skill=技能
+   heroes[].phases 前/中/后期；每期含 goals(路线目标) picks(抓牌顺序，按优先级排列)
+                   shops(进店顺序) tips(注意点)
+   heroes[].bounds 该职业整体的上限 / 下限
+   ════════════════════════════════════════════════════════════════════ */
+const GUIDE_DATA = {
+  meta: {
+    season: "S15",
+    dataDate: "2026-06-05",
+    siteVersion: "1.0.0",
+    confidence: "S15 赛季初：流派框架取自 Mobalytics 6 月 S15 元数据；运营细节参考 S12–S14 社区共识，可能随热修变动",
+    sources: [
+      { name: "Mobalytics · S15 Meta Builds", url: "https://mobalytics.gg/the-bazaar/guides/meta-builds" },
+      { name: "Mobalytics · Patch Notes Tracker", url: "https://mobalytics.gg/the-bazaar/guides/patch-notes" },
+      { name: "BazaarDB · 全卡数据库/统计", url: "https://bazaardb.gg" },
+      { name: "BazaarForge · 出场率 T 表", url: "https://bazaarforge.gg" },
+      { name: "B 站国服社区 S14 攻略（济海 / 阿榑阿福 / 憨猪在度假 等）", url: "https://search.bilibili.com/all?keyword=大巴扎攻略" }
+    ],
+    changelog: [
+      { date: "2026-06-10", text: "v1.0.0 建站：S15 赛季初 7 职业全量攻略上线" }
+    ]
+  },
+
+  general: {
+    intro: "大巴扎一局的本质是「用有限的时间和金币，把随机货架拼成一台能打 10 胜的机器」。每一天你在地图上选择遭遇（商人 / 奇遇 / 野怪），日终与其他玩家的镜像盘面结算 PVP；累计 10 胜毕业，血量归零出局。所以所有职业的运营都绕不开三个问题：这一天进哪些店、店里抓什么、这一阶段我要打成什么样。",
+    blocks: [
+      { title: "天数节奏（通用三段论）", items: [
+        "前期 Day 1–4｜青铜·拼节奏：货架以青铜物品为主，目标不是定流派，而是『今天的盘面能打赢今天的对手』。能赢就赢，赢不了优先保血。",
+        "中期 Day 5–9｜黄金·定主轴：白银/黄金商人陆续出现，核心件开始可见。这一段必须做出流派抉择——继续杂凑必输后期。",
+        "后期 Day 10+｜钻石·拉上限：钻石及以上货架解锁，工作是把核心升品、上附魔、补反制件（冻结 / 减速 / 摧毁对策），向 10 胜冲刺。"
+      ]},
+      { title: "商人与进店通识", items: [
+        "商人按品阶分级：青铜商人 Day 1 即可出现、刷新便宜（约 2 金）但商品最杂；白银 / 黄金 / 钻石商人随天数解锁，越高级越贵、商品越精。",
+        "进店优先级的底层逻辑：本系专卖店（武器 / 水族 / 科技 / 药剂 / 食物 / 兽群）> 综合商人 > 技能商人 > 附魔类奇遇。找特定核心去专卖店，捡漏去综合店。",
+        "刷新（Reroll）是把双刃剑：前期 2 金刷新约等于半件装备，没有明确目标不要乱刷；中期为定轴可以连刷，后期为关键附魔 / 升品值得重金刷。",
+        "技能商人和精英怪是技能两大来源：版本强力通用技能（如暴击系、灼烧系）优先级常常高于一件普通装备。"
+      ]},
+      { title: "经济与等级", items: [
+        "金币每天有基础收入，部分物品 / 奇遇提供额外收入或增值（Value）。S12 起场外刷钱被大砍，纯经济流收益下降——经济件点到为止，盘面强度优先。",
+        "经验升级给属性与技能选择。升级节奏跟着野怪走：野怪 = 金币 + 经验 + 战利品三合一，是性价比最高的遭遇。",
+        "卖货时机：过渡件在『有更好的替代品上场的那一刻』卖掉；带任务 / 增值的物品看清触发条件再卖。"
+      ]},
+      { title: "打野（PVE）通识", items: [
+        "野怪强度有梯度：开打前看清怪物盘面（武器伤害型 / 灼烧毒型 / 护盾拖延型），用自己当前盘面克制的类型去换战利品。",
+        "精英怪掉落关键技能与高品物品，是中期质变的主要来源——但翻车 = 白送血量，没把握宁可打小怪。",
+        "S15 赛季初野怪池有调整（如 Strange Mushroom、Jungle Ruins、Tiny Furry Monster 等低阶遭遇可持续到 Day 3），前 3 天的打野收益比以往更稳定。"
+      ]}
+    ]
+  },
+
+  tiers: [
+    { tier: "T0", heroes: ["mak", "karnok"], note: "上限统治后期：马克一刀流 / 卡诺克符文巨剑，S15 开局版本答案" },
+    { tier: "T1", heroes: ["dooley", "vanessa"], note: "公式化强势：机宝下限全游戏最高；瓦妮莎旗舰加强后前后期都硬" },
+    { tier: "T1.5", heroes: ["pygmalien", "stelle"], note: "猪猪温泉锁场恶心但怕秒杀队；黑妹拼图流派，缺件强度断崖" },
+    { tier: "T2", heroes: ["jules"], note: "厨师灶台/冷柜摆位 RNG 偏重，强度可用但稳定性垫底" }
+  ],
+
+  heroes: [
+  /* ───────────────────────── 1. VANESSA 瓦妮莎（海盗） ───────────────────────── */
+  {
+    id: "vanessa", en: "Vanessa", cn: "瓦妮莎", nick: "海盗", hue: "#4FB7A8",
+    tagline: "武器连击 · 水族伙伴 · 暴击转毒/灼烧",
+    tier: "T1", difficulty: 2,
+    s15: "本季最大变化：<b>Flagship（旗舰）大加强</b>——基础伤害与冷却双调整后从开局打到结尾，且白银品阶 Day 2 就能拿到，等于海盗多了一条『见旗舰直接定轴』的快车道（后续热修小砍基础伤害，需自己补成长）；<b>Scimitar of the Deep（深海弯刀）</b>把暴击转化为大量中毒，配合弹药技能成为新一线；Rifle 冷却降到 2 秒，多武器铺场更顺。",
+    builds: [
+      {
+        name: "Flagship 旗舰多武器", tier: "T1", onset: "Day 2–4 起手，Day 6 前成型",
+        desc: "旗舰为全场武器提供持续加伤，把一排平平无奇的武器变成绞肉机。S15 白银品阶即可购入，是节奏最快的主轴；配合非本系（off-hero）强力武器收益更高。",
+        cards: [
+          { en: "Flagship", cn: "旗舰：周期性为你的武器加伤，全队输出引擎", role: "core" },
+          { en: "Rifle", cn: "步枪：S15 冷却降至 2s 的高频弹药武器，旗舰最佳搭档", role: "engine" },
+          { en: "Cutlass", cn: "弯刀：青铜万金油武器，前期节奏件后期可替换", role: "filler" },
+          { en: "Trebuchet", cn: "投石机：大型武器终结点，多武器后期上限件", role: "engine" },
+          { en: "Tripwire", cn: "绊雷：减速反制件，克制对面快速循环", role: "tech" }
+        ],
+        ceiling: "满铺武器 + 旗舰多层加伤，后期一轮齐射带走任何非锁场队。",
+        floor: "旗舰被冻结点名时输出腰斩；没摸到高质量武器时只是普通铺场队。"
+      },
+      {
+        name: "Tortuga 水族伙伴", tier: "T1", onset: "Day 4–7 拼图，Day 9 前成型",
+        desc: "围绕 Tortuga 的水族滚雪球体系：小水族高频触发互相充能，越打越快。S12 起 Sharkray / Piranha 重做后拼图路径变顺，海盗还能进伙伴（Friends）商店，找件难度下降。",
+        cards: [
+          { en: "Tortuga", cn: "托尔图加（海龟舰）：水族核心，水族触发时充能/增益", role: "core" },
+          { en: "Piranha", cn: "食人鱼：小型水族，高频触发的雪球起点", role: "engine" },
+          { en: "Sharkray", cn: "鲨鳐：重做后的中型水族，体系加速器", role: "engine" },
+          { en: "Zoarcid", cn: "绵鳚：水族伤害件，兼容灼烧分支", role: "engine" },
+          { en: "Narwhal", cn: "独角鲸：水族暴击支援", role: "filler" },
+          { en: "Vampire Squid", cn: "吸血鬼乌贼：吸血续航，雪球期保命", role: "filler" }
+        ],
+        ceiling: "成型后无限滚雪球，速度与数值同时起飞，后期几乎无解。",
+        floor: "Tortuga 一直不来时只是杂鱼缸，Day 8 前拼不齐要果断转旗舰/灼烧。"
+      },
+      {
+        name: "Scimitar of the Deep 暴击毒", tier: "T1.5", onset: "Day 5–8 看暴击件成型",
+        desc: "S15 新轴：深海弯刀把暴击转化为大量中毒，伤害成长够高时甚至不需要它的加速半边。靠小型暴击件 + 弹药技能（Loaded Fury / Parting Shot）把暴击率堆满。打不成可平滑转入 Oni Mask 灼烧慢热流。",
+        cards: [
+          { en: "Scimitar of the Deep", cn: "深海弯刀：暴击时施加大量中毒，本体即胜负手", role: "core" },
+          { en: "Incendiary Rounds", cn: "燃烧弹药：小型灼烧/弹药件，触发暴击技能联动", role: "engine" },
+          { en: "Oni Mask", cn: "般若面具：暴击灼烧增伤，备用转型核心", role: "tech" },
+          { en: "Loaded Fury", cn: "技能·装填之怒：弹药系暴击增益", role: "skill" },
+          { en: "Parting Shot", cn: "技能·临别一击：弹药系收尾增伤", role: "skill" },
+          { en: "Tracer Fire", cn: "技能·曳光弹：弹药连发联动灼烧的版本强技", role: "skill" }
+        ],
+        ceiling: "暴击率达标后中毒指数级叠加，融化高血量再生队。",
+        floor: "暴击技能 / 小件不到位时毒量不够看，需要中途止损转灼烧。"
+      }
+    ],
+    phases: [
+      { key: "e", name: "前期", days: "Day 1–4",
+        goals: ["用便宜武器抢节奏：目标 Day 4 前 2–3 胜，血量不低于 70%", "Day 2 起每天看一眼白银货架：见 Flagship 直接定轴", "小水族 / 灼烧小件顺手囤 1–2 件，给中期留转型口子"],
+        picks: [
+          { en: "Cutlass / 任意低费武器", cn: "青铜武器抢前期对局，别挑剔", role: "filler" },
+          { en: "Flagship", cn: "白银见到 = 本局主轴确定，最高优先", role: "core" },
+          { en: "Piranha", cn: "便宜水族占位，Tortuga 路线的种子", role: "engine" },
+          { en: "Lighter / Pop Snappers", cn: "打火机/摔炮：灼烧过渡小件，便宜好用", role: "filler" }
+        ],
+        shops: [
+          { s: "武器商人", why: "海盗前期强度全在武器质量，第一优先" },
+          { s: "综合商人（青铜）", why: "捡漏低费节奏件与水族种子" },
+          { s: "野怪（弱→强）", why: "金币+经验+战利品三合一，挑武器/技能掉落的打" },
+          { s: "技能商人", why: "见暴击/弹药/灼烧系版本技能可提前锁" }
+        ],
+        tips: ["前 3 天野怪池更友好（低阶遭遇延长到 Day 3），别浪费白嫖窗口", "输 1–2 场不致命，连续掉大血才需要立刻补强度"] },
+      { key: "m", name: "中期", days: "Day 5–9",
+        goals: ["三选一定型：旗舰多武器 / Tortuga 水族 / 暴击毒（深海弯刀）", "Day 9 前达到 5–6 胜，核心三件套到位", "给核心件上第一个附魔（武器系优先 Deadly 暴击 / Fiery 灼烧向）"],
+        picks: [
+          { en: "核心拼图件", cn: "已定轴流派的核心/引擎件 > 一切（见上方流派卡）", role: "core" },
+          { en: "Sharkray / Zoarcid", cn: "水族路线的中坚，见到就收", role: "engine" },
+          { en: "Scimitar of the Deep", cn: "黄金段位货架重点搜寻对象", role: "core" },
+          { en: "Vampire Squid", cn: "续航件，中期血量告急时优先级上调", role: "filler" }
+        ],
+        shops: [
+          { s: "本系专卖店（武器/水族）", why: "定向找核心，必要时连刷" },
+          { s: "伙伴（Friends）商店", why: "海盗本季可进，Tortuga 路线找件效率大增" },
+          { s: "附魔奇遇", why: "核心武器第一个附魔=半个流派强度" },
+          { s: "精英怪", why: "搏关键技能（Tracer Fire / Loaded Fury 等）" }
+        ],
+        tips: ["Day 8 仍没拼出水族核心 → 果断卖鱼转旗舰或灼烧，沉没成本最害人"] },
+      { key: "l", name: "后期", days: "Day 10+",
+        goals: ["核心升品到钻石、补第二/第三附魔", "补反制件：Tripwire 减速、抗冻结手段，防止旗舰被点名", "向 10 胜冲刺：每天评估『我怕谁』并针对性补件"],
+        picks: [
+          { en: "核心升品/复制件", cn: "同名核心高品阶替换，优先级最高", role: "core" },
+          { en: "Trebuchet", cn: "多武器队的后期一锤定音件", role: "engine" },
+          { en: "Tripwire", cn: "对快攻/循环队的标准答案", role: "tech" }
+        ],
+        shops: [
+          { s: "钻石商人", why: "高品核心与传说件唯一来源" },
+          { s: "附魔奇遇", why: "后期一个对位附魔常常等于一场胜利" },
+          { s: "高阶精英", why: "技能成型的最后一块拼图" }
+        ],
+        tips: ["海盗定型后灵活性低于机宝/猪猪，后期重心是『把已有的做深』而非再转型"] }
+    ],
+    bounds: {
+      up: "上限：旗舰满武器齐射 / Tortuga 无限雪球 / 暴击毒融化肉队——三条线成型后都能稳进 10 胜，且成型速度在全英雄里偏快。",
+      down: "下限：新手最友好的职业之一，杂凑武器也有 6–8 胜底子；真正的败因通常是中期不肯定轴，三头下注全都半成品。"
+    }
+  },
+
+  /* ───────────────────────── 2. PYGMALIEN 猪猪 ───────────────────────── */
+  {
+    id: "pygmalien", en: "Pygmalien", cn: "皮格马利安", nick: "猪猪", hue: "#E58FB1",
+    tagline: "前期打架 · 增值经济 · 锁场消耗",
+    tier: "T1.5", difficulty: 3,
+    s15: "<b>Private Hot Springs（私人温泉）</b>是本季猪猪的明星件：高频灼烧 + 长冻结锁场 + 被动再生，打不出斩杀的队伍会被它活活耗死（热修后冻结 4s→3s，仍强）；<b>Square 打架猪（Crook 体系）</b>继续统治前期；<b>Private Jet（私人飞机）</b>起飞，为悠悠球等快速小件提供成长引擎。注意：场外增值刷钱自 S12 大砍后未回调，纯经济猪已是陷阱。",
+    builds: [
+      {
+        name: "Square 打架猪（Crook 体系）", tier: "T1", onset: "Day 1 起手，全程在线",
+        desc: "Crook 高基础伤害碾压前期，滚起胜场雪球后接 Lion Cane / Regal Blade / Cash Cannon 等重锤收尾。S15 官方点名的经典 beatdown 路线，吃非本系好武器。",
+        cards: [
+          { en: "Crook", cn: "牧羊杖：超高基伤的前期武器，打架猪的发动机", role: "core" },
+          { en: "Lion Cane", cn: "狮头杖：中后期重锤，雪球的下一站", role: "engine" },
+          { en: "Regal Blade", cn: "君王之刃：高品质终结武器", role: "engine" },
+          { en: "Cash Cannon", cn: "钞票炮：金币联动炮，S12 重做后按存量回溯结算", role: "engine" },
+          { en: "Belt", cn: "腰带：加最大生命，猪猪的防御万金油", role: "tech" },
+          { en: "Atlatl", cn: "投矛器：武器加速支援件", role: "filler" }
+        ],
+        ceiling: "前期连胜攒下的经济与血量优势一路滚到 10 胜。",
+        floor: "中期重锤接不上时输出脱节，被后期成长怪反超。"
+      },
+      {
+        name: "Private Hot Springs 温泉锁场", tier: "T1", onset: "Day 5–8 见温泉定轴",
+        desc: "温泉高频灼烧 + 冻结把对面盘面按在地上摩擦，自带再生抵消对方 DOT。打不出一波秒杀的阵容对它几乎无解，是 S15 猪猪的版本答案。",
+        cards: [
+          { en: "Private Hot Springs", cn: "私人温泉：灼烧+冻结+再生三合一锁场核心", role: "core" },
+          { en: "Icicle", cn: "冰锥：开场冻结，配合 Invigorating Cold 技能", role: "engine" },
+          { en: "Booby Trap", cn: "诡雷：重做后联动 Frozen Shot 技能提速", role: "engine" },
+          { en: "Gramophone", cn: "留声机：通用加速引擎，缩短成型时间", role: "engine" },
+          { en: "Invigorating Cold", cn: "技能·提神寒气：冻结联动的版本技能", role: "skill" }
+        ],
+        ceiling: "冻结链拉满后对面全程站桩，再生耗死一切非秒杀队。",
+        floor: "怕一炮流（太空激光/符文巨剑）：锁不住的瞬间爆发直接掀桌。"
+      },
+      {
+        name: "Private Jet 飞机引擎", tier: "T1.5", onset: "Day 6–9 拼图",
+        desc: "S15 新起飞流派：私人飞机为快速连发的小件提供持续成长（现在能让自身立即起飞），Yo-Yo、Uwashiwali Bird 等高频小件越转越快。",
+        cards: [
+          { en: "Private Jet", cn: "私人飞机：快速小件的可靠成长引擎，S15 加强", role: "core" },
+          { en: "Yo-Yo", cn: "悠悠球：高频触发小件，飞机最佳乘客", role: "engine" },
+          { en: "Uwashiwali Bird", cn: "乌瓦希瓦利鸟：快速伙伴，可被飞机即时带飞", role: "engine" },
+          { en: "Textiles", cn: "纺织品：增值/加速支援", role: "filler" }
+        ],
+        ceiling: "小件频率叠满后输出曲线指数上升，节奏怪杀手。",
+        floor: "标准拼图流派：缺飞机或缺乘客都只是散件，强度断崖。"
+      }
+    ],
+    phases: [
+      { key: "e", name: "前期", days: "Day 1–4",
+        goals: ["Crook 起手抢连胜：Day 4 目标 3 胜，这是猪猪全游戏最强的窗口期", "Belt 早拿堆血，把生命值变成容错", "经济件点到为止（1–2 件），盘面强度永远优先"],
+        picks: [
+          { en: "Crook", cn: "见到必拿，前期版本答案", role: "core" },
+          { en: "Belt", cn: "最大生命=猪猪的护城河", role: "tech" },
+          { en: "Dog", cn: "狗：便宜好用的青铜武器替补", role: "filler" },
+          { en: "低费增值件", cn: "限量 1–2 件，别复刻刷钱老猪", role: "filler" }
+        ],
+        shops: [
+          { s: "武器商人", why: "Crook 与替补武器来源" },
+          { s: "综合商人（青铜）", why: "Belt / 杂项防御件" },
+          { s: "野怪", why: "猪猪前期盘面硬，多吃野滚经济" },
+          { s: "经济类奇遇", why: "顺路才进，别绕路" }
+        ],
+        tips: ["S12 后场外增值大砍：谁还按老攻略蹲 Pawn Shop 刷钱谁吃亏", "前期每一场赢下来的血量都是后期温泉/重锤的本钱"] },
+      { key: "m", name: "中期", days: "Day 5–9",
+        goals: ["关键抉择：见 Private Hot Springs 立刻转锁场；否则沿打架线找重锤", "Gramophone / Textiles 上引擎，把成型时间往前赶", "Day 9 前 5–6 胜或保住 60%+ 血量"],
+        picks: [
+          { en: "Private Hot Springs", cn: "白银/黄金货架最高优先，本局走向分水岭", role: "core" },
+          { en: "Lion Cane / Regal Blade", cn: "打架线的中期接力棒", role: "engine" },
+          { en: "Gramophone", cn: "两条线都吃的通用加速", role: "engine" },
+          { en: "Icicle + Booby Trap", cn: "温泉线的控制配件", role: "engine" }
+        ],
+        shops: [
+          { s: "综合/家居类专卖店", why: "温泉、留声机等非武器核心的主要来源" },
+          { s: "武器商人", why: "打架线补重锤" },
+          { s: "附魔奇遇", why: "温泉上 Icy/Fiery、重锤上 Heavy 都是质变" },
+          { s: "精英怪", why: "搏 Frozen Shot / Invigorating Cold 等控制技能" }
+        ],
+        tips: ["温泉和重锤两头都想要 = 两头都不硬，Day 7 前必须二选一"] },
+      { key: "l", name: "后期", days: "Day 10+",
+        goals: ["锁场线：冻结覆盖率拉满 + 再生叠厚，专心耗死对手", "打架线：Cash Cannon / Regal Blade 升品，追求两轮内击倒", "识别天敌：遇一炮流要补打断/护盾，遇消耗队比谁更肉"],
+        picks: [
+          { en: "核心升品件", cn: "温泉/重锤的高品复制件最优先", role: "core" },
+          { en: "Booby Trap（高品）", cn: "对快攻的标准反制", role: "tech" },
+          { en: "再生/护盾件", cn: "镜像消耗局的胜负手", role: "tech" }
+        ],
+        shops: [
+          { s: "钻石商人", why: "高品温泉与传说重锤" },
+          { s: "附魔奇遇", why: "后期附魔=最后的强度阀门" },
+          { s: "高阶精英", why: "补齐控制/再生技能" }
+        ],
+        tips: ["猪猪后期打的是『对面打不死我』——每天问自己这句话还成不成立"] }
+    ],
+    bounds: {
+      up: "上限：温泉锁场成型后近乎不讲理，非秒杀队全被耗死；打架线则靠前期雪球碾到终点。",
+      down: "下限：经济玩法被砍后『刷钱躺赢』不复存在；前期连败掉血的猪猪没有翻盘引擎，是七职业里最怕开局崩盘的之一。"
+    }
+  },
+
+  /* ───────────────────────── 3. DOOLEY 机宝 ───────────────────────── */
+  {
+    id: "dooley", en: "Dooley", cn: "杜利", nick: "机宝", hue: "#5CC8E8",
+    tagline: "核心体系 · 科技小件 · 公式化运营",
+    tier: "T1", difficulty: 1,
+    s15: "机宝三大核心线全部健在：<b>Dooltron（杜利特隆）</b>凭灵活性与裸数值仍是顶级；<b>Launcher Core（发射核心）</b>带飞一切快速循环；<b>Weaponized Core（武装核心）</b>稳健自成长，配 <b>Antimatter Chamber（反物质舱）</b>干扰打乱对手节奏。升级奖励选核心方向 + 公式化吃野，依旧是全游戏下限最高、最推荐萌新的职业。",
+    builds: [
+      {
+        name: "Dooltron 伙伴机甲", tier: "T0.5", onset: "Day 4–7 视核心/伙伴到位",
+        desc: "围绕 Dooltron 的伙伴体系：数值粗暴、引擎多样——小件附魔联动或 Monitor Lizard 减 CD 急速连发都能成立，是 S15 机宝出场率最高的一线。",
+        cards: [
+          { en: "Dooltron", cn: "杜利特隆：伙伴机甲核心，裸数值顶级", role: "core" },
+          { en: "Monitor Lizard", cn: "巨蜥：减 CD + 急速喷射的引擎伙伴", role: "engine" },
+          { en: "Z-Shield", cn: "Z 盾：护盾支援，站场底气", role: "engine" },
+          { en: "Bunker", cn: "地堡：大型护盾件，消耗局压舱石", role: "tech" }
+        ],
+        ceiling: "数值与频率双高，正面对拼几乎不输任何中速队。",
+        floor: "核心被冻结/摧毁针对时哑火——后期记得带解控或备用输出。"
+      },
+      {
+        name: "Launcher Core 发射核心（飞核）", tier: "T1", onset: "Day 3–6 搭循环",
+        desc: "发射核心让相邻物品疯狂提速，国服俗称『飞核/0 帧起手』。终结点常见 Ice 9000 / Nitrogen Hammer / Terry-Dactyl，但理论上任何东西都能被它带飞——创造力即上限。",
+        cards: [
+          { en: "Launcher Core", cn: "发射核心：让一切高速循环的引擎心脏", role: "core" },
+          { en: "Ice 9000", cn: "冰霜 9000：冻结终结器，国服『银盾9000』梗主角", role: "engine" },
+          { en: "Nitrogen Hammer", cn: "液氮锤：冻结+重击双修终结点", role: "engine" },
+          { en: "Fiber Optics", cn: "光纤：相邻联动神器，『四根光纤左脚踩右脚』", role: "engine" },
+          { en: "Cooling Fan / Coolant", cn: "散热风扇/冷却液：减 CD 小件，循环润滑剂", role: "filler" },
+          { en: "Metronome", cn: "节拍器：节奏控制支援", role: "filler" }
+        ],
+        ceiling: "循环搭通后 0 帧起手，对面还没动就被冻住/砸死。",
+        floor: "循环缺一环就转不动，但小件来源极广，实际很难彻底断件。"
+      },
+      {
+        name: "Weaponized Core 武装核心", tier: "T1.5", onset: "Day 3 起手即可用",
+        desc: "经典自成长核心：开局就能打、一路平滑长大。输出峰值不及前两套，但胜在零拼图压力；后期可加 Antimatter Chamber 干扰对手关键件，赢在体系外。",
+        cards: [
+          { en: "Weaponized Core", cn: "武装核心：自我成长武器核心，从头用到尾", role: "core" },
+          { en: "Capacitor", cn: "电容：充能支援小件", role: "engine" },
+          { en: "GPU / Cool LEDs", cn: "显卡/炫彩灯条：科技小件成长组", role: "engine" },
+          { en: "Antimatter Chamber", cn: "反物质舱：干扰对手物品的后期杀招", role: "tech" },
+          { en: "Remote Control", cn: "遥控器：触发支援", role: "filler" }
+        ],
+        ceiling: "稳定 8–10 胜的轮椅线，干扰件到位后能掀翻更强的盘面。",
+        floor: "纯比数值会输给成型的 T0 队——它的下限就是别人的中位数。"
+      }
+    ],
+    phases: [
+      { key: "e", name: "前期", days: "Day 1–4",
+        goals: ["升级奖励里选定核心方向（武装核稳 / 发射核上限）", "围绕核心堆相邻触发小件，机宝前期盘面天生成型", "公式化吃野：机宝是全职业前期打野最稳的，经验金币双吃"],
+        picks: [
+          { en: "Weaponized Core / Launcher Core", cn: "核心方向第一优先（升级奖励或货架）", role: "core" },
+          { en: "Fiber Optics", cn: "见到就拿，哪条线都吃", role: "engine" },
+          { en: "Cooling Fan / Coolant", cn: "便宜的减 CD 润滑剂", role: "filler" },
+          { en: "Beta Ray", cn: "β射线：前期输出补充", role: "filler" }
+        ],
+        shops: [
+          { s: "科技专卖店", why: "机宝小件大本营，第一优先" },
+          { s: "综合商人（青铜）", why: "捡相邻触发杂件" },
+          { s: "野怪（按表吃）", why: "机宝公式化打野收益全场最高" },
+          { s: "技能商人", why: "充能/护盾系技能提前锁" }
+        ],
+        tips: ["国服『7 分钟机宝公式』本质：核心+光纤+减CD件三板斧，照抄即可达标", "机宝前期别贪转型，先把基础公式跑通"] },
+      { key: "m", name: "中期", days: "Day 5–9",
+        goals: ["确认终结点：飞核找 Ice 9000/液氮锤，伙伴线找 Dooltron+巨蜥", "附魔节点：核心上 Turbo（加速）或 Shielded（护盾）系", "Day 9 前 5–6 胜，循环必须基本闭合"],
+        picks: [
+          { en: "Dooltron", cn: "见到可直接升级流派上限", role: "core" },
+          { en: "Ice 9000 / Nitrogen Hammer", cn: "飞核终结点，二选一即可", role: "engine" },
+          { en: "Monitor Lizard", cn: "伙伴线的频率引擎", role: "engine" },
+          { en: "Z-Shield / Bunker", cn: "防御缺口用护盾补", role: "tech" }
+        ],
+        shops: [
+          { s: "科技/伙伴专卖店", why: "定向补终结点与引擎" },
+          { s: "附魔奇遇", why: "核心第一附魔=强度跳变" },
+          { s: "精英怪", why: "机宝中期盘面硬，多搏高级战利品" }
+        ],
+        tips: ["循环类盘面摆位即强度：触发链从左到右捋一遍再开战"] },
+      { key: "l", name: "后期", days: "Day 10+",
+        goals: ["核心与终结点升品，循环速度做到极致", "上 Antimatter Chamber 等干扰件，专拆对手核心", "防针对：备好解冻/抗摧毁手段，别让单点故障葬送一局"],
+        picks: [
+          { en: "核心高品复制", cn: "永远的第一优先", role: "core" },
+          { en: "Antimatter Chamber", cn: "对位 T0 队的胜负手", role: "tech" },
+          { en: "高品护盾件", cn: "消耗局保底", role: "tech" }
+        ],
+        shops: [
+          { s: "钻石商人", why: "高品核心唯一稳定来源" },
+          { s: "附魔奇遇", why: "第二/第三附魔收尾" },
+          { s: "高阶精英", why: "最后的技能拼图" }
+        ],
+        tips: ["机宝后期最大的敌人是『被点名』：冻结/摧毁全往核心上招呼，冗余输出别卖光"] }
+    ],
+    bounds: {
+      up: "上限：飞核 0 帧循环与 Dooltron 裸数值都有冲顶实力，干扰件还能赢在盘面之外。",
+      down: "下限：全游戏最高——公式化运营 + 打野模板让萌新也能稳定 6–8 胜，国服公认的新手第一职业。"
+    }
+  },
+
+  /* ───────────────────────── 4. MAK 马克 ───────────────────────── */
+  {
+    id: "mak", en: "Mak", cn: "马克", nick: "药剂师", hue: "#8FD68F",
+    tagline: "药水引擎 · 再生续航 · 符文一刀流",
+    tier: "T0", difficulty: 5,
+    s15: "S15 对马克动刀不小：<b>Book of Secrets（秘密之书）回退白银</b>，连带 <b>Staff of the Wise（智者之杖）</b>体系受创；<b>Library（图书馆）重做</b>后只给非武器减 CD，不再加速武器，武器马克裸奔度上升。但<b>Eternal Torch（永恒火炬）焚诀</b>、<b>Poppy Field(罂粟田) 武器铺场</b>与 <b>Plague Glaive（瘟疫关刀）毒爆一刀</b>三条线依旧把马克按在 T0——上限仍是版本天花板，只是更吃手了。",
+    builds: [
+      {
+        name: "Eternal Torch 焚诀", tier: "T0.5", onset: "Day 5–8 找到火炬定轴",
+        desc: "永恒火炬为轴的灼烧体系，国服『马克焚诀』本体。药水/试剂高频触发推灼烧层数，Athanor（炼金炉）S12 降白银后一致性大增，分支众多（牛杖/关刀分支等）。",
+        cards: [
+          { en: "Eternal Torch", cn: "永恒火炬：灼烧核心，焚诀的火种", role: "core" },
+          { en: "Athanor", cn: "炼金炉：白银品阶+自带升级效果，体系一致性来源", role: "engine" },
+          { en: "Boiling Flask", cn: "沸腾烧瓶：灼烧药剂引擎", role: "engine" },
+          { en: "Sleeping Potion", cn: "安眠药水：控制支援，争取烧的时间", role: "tech" },
+          { en: "Atmospheric Sampler", cn: "大气采样器：试剂联动支援", role: "filler" }
+        ],
+        ceiling: "灼烧层数滚起来后融化一切，控制药水还能反锁快攻。",
+        floor: "火炬迟迟不来时只是个慢热药剂师，会被节奏队抢死。"
+      },
+      {
+        name: "Poppy Field 罂粟铺场", tier: "T1", onset: "Day 4–7 铺小件",
+        desc: "罂粟田给武器铺场提供恐怖的速度与成长：可以小件横铺打节奏，也能中途转向 Goop Flail / Plague Glaive 的一刀斩杀。Magic Carpet（魔毯）是常见的找件发动机。",
+        cards: [
+          { en: "Poppy Field", cn: "罂粟田：武器体系发动机，速度+成长双修", role: "core" },
+          { en: "Runic Potion", cn: "符文药水：符文体系万金油触发器", role: "engine" },
+          { en: "Hourglass", cn: "沙漏：节奏控制小件", role: "engine" },
+          { en: "Smelling Salts", cn: "嗅盐：便宜的高频触发小件", role: "filler" },
+          { en: "Goop Flail", cn: "粘液连枷：一刀流转型终点之一", role: "engine" },
+          { en: "Magic Carpet", cn: "魔毯：找件神器，铺场转一刀的桥梁", role: "tech" }
+        ],
+        ceiling: "铺场期压制节奏，转型后一刀超度——攻防节奏全在自己手里。",
+        floor: "S15 Library 重做后武器线提速变难，对铺场质量要求更高。"
+      },
+      {
+        name: "Plague Glaive 毒爆一刀", tier: "T1", onset: "Day 6–9 憋大招",
+        desc: "瘟疫关刀为轴的毒爆斩杀：毒量喂满后一刀带走，专治『谁先动手谁赢』之外的一切慢速队。Icicle + Invigorating Cold 是经典启动器。",
+        cards: [
+          { en: "Plague Glaive", cn: "瘟疫关刀：毒爆一刀核心，国服『关刀分支』", role: "core" },
+          { en: "Basilisk Fang", cn: "蛇蜥之牙：毒量小件引擎", role: "engine" },
+          { en: "Runic Great Axe", cn: "符文巨斧：备选一刀重武器", role: "engine" },
+          { en: "Icicle", cn: "冰锥：开场冻结启动器", role: "tech" },
+          { en: "Invigorating Cold", cn: "技能·提神寒气：冻结联动启动技能", role: "skill" }
+        ],
+        ceiling: "一刀数值无上限，后期任何站场队都是一刀的事。",
+        floor: "憋大招期间最脆：被快攻连抓节奏会直接出局，进场时机全凭经验。"
+      }
+    ],
+    phases: [
+      { key: "e", name: "前期", days: "Day 1–4",
+        goals: ["认清现实：马克是全职业前期最弱，目标是『少输血』不是赢", "嗅盐/能量药水等便宜小件维持底线盘面", "自毒类技能（DLC 机制）看清再拿，前期乱自毒会暴毙"],
+        picks: [
+          { en: "Smelling Salts", cn: "便宜高频小件，过渡期顶梁柱", role: "filler" },
+          { en: "Energy Potion / Strength Potion", cn: "能量/力量药水：基础节奏件", role: "filler" },
+          { en: "Basilisk Fang", cn: "便宜毒件，给毒线留种子", role: "engine" },
+          { en: "再生类小件", cn: "马克前期的血量就是后期的本钱", role: "tech" }
+        ],
+        shops: [
+          { s: "药剂专卖店", why: "本系小件大本营" },
+          { s: "综合商人（青铜）", why: "捡再生/控制杂件" },
+          { s: "野怪（只挑软柿子）", why: "马克前期盘面软，打野宁稳勿贪" },
+          { s: "技能商人", why: "再生/毒/灼烧系版本技能" }
+        ],
+        tips: ["前 4 天每一滴血都值钱：宁可少打一场野，不要莽精英", "别急着定流派，马克的核心件基本都在白银之后"] },
+      { key: "m", name: "中期", days: "Day 5–9",
+        goals: ["三线定轴：火炬焚诀 / 罂粟铺场 / 关刀毒爆，看货架给什么", "Magic Carpet 之类找件引擎优先级极高——马克=找到核心才算开局", "Day 9 前哪怕只有 4–5 胜，只要核心到手就不亏"],
+        picks: [
+          { en: "Eternal Torch / Poppy Field / Plague Glaive", cn: "三大核心见一收一，本局走向就此确定", role: "core" },
+          { en: "Athanor", cn: "白银货架重点搜寻，焚诀一致性来源", role: "engine" },
+          { en: "Magic Carpet", cn: "找件发动机，间接等于半个核心", role: "tech" },
+          { en: "Runic Potion", cn: "符文线万金油", role: "engine" }
+        ],
+        shops: [
+          { s: "药剂/符文专卖店", why: "三大核心的主要来源，值得连刷" },
+          { s: "附魔奇遇", why: "核心到手立刻上对位附魔" },
+          { s: "精英怪", why: "中期盘面起来后再开始搏高收益" },
+          { s: "综合商人（黄金）", why: "捡 off-hero 强力武器补一刀线" }
+        ],
+        tips: ["S15 注意：Library 不再加速武器、秘密之书回白银——老攻略里的图书馆武器流别照抄"] },
+      { key: "l", name: "后期", days: "Day 10+",
+        goals: ["一刀线：把斩杀数值堆过『当前最肉对手的血量』，然后才考虑速度", "焚诀线：灼烧覆盖率+控制链，专心拖死对面", "复盘对手池：马克后期理论打谁都赢，输只输在配置错位"],
+        picks: [
+          { en: "核心高品复制", cn: "一刀的刀、焚诀的火炬，升品=直接加伤", role: "core" },
+          { en: "Sleeping Potion（高品）", cn: "控制链延长器", role: "tech" },
+          { en: "抗冻/解控件", cn: "防止憋招期间被锁死", role: "tech" }
+        ],
+        shops: [
+          { s: "钻石商人", why: "高品核心与传说药剂" },
+          { s: "附魔奇遇", why: "Deadly/Toxic 等对位附魔收尾" },
+          { s: "高阶精英", why: "成型马克可以无伤白嫖大部分精英" }
+        ],
+        tips: ["马克的 10 胜常常是后 5 天连胜打满——前中期忍住，别为短期胜场卖掉体系件"] }
+    ],
+    bounds: {
+      up: "上限：版本天花板。一刀流后期数值无上限，焚诀+控制链同样无解，国服天梯前列常驻。",
+      down: "下限：同样夸张——前期全职业最弱、核心全靠中期找，找不到就是 2–4 胜散场。手越生下限越低，是典型的高手职业。"
+    }
+  },
+
+  /* ───────────────────────── 5. STELLE 斯黛拉 ───────────────────────── */
+  {
+    id: "stelle", en: "Stelle", cn: "斯黛拉", nick: "黑妹", hue: "#F0A05A",
+    tagline: "充能爆发 · 载具飞行 · 自毁焚烧",
+    tier: "T1.5", difficulty: 4,
+    s15: "<b>LavaRoller（熔岩滚轮）</b>自毁焚烧虽经多轮削弱仍是主流：低 CD 件 + Headset（耳机）稳定急速让它轻松起步；S15 两条新线值得练：<b>Private Runabout（私人快艇）</b>载具充能与<b>Chicken Cannon（鸡肉炮）</b>整活炮线。传统 <b>Space Laser（太空激光）</b>充能一炮仍是后期上限担当。黑妹是标准拼图职业：件到位起飞，缺件强度断崖。",
+    builds: [
+      {
+        name: "LavaRoller 自毁焚烧", tier: "T1", onset: "Day 4–7 见滚轮定轴",
+        desc: "滚轮自毁换巨量灼烧，Ornithopter（扑翼机）等低 CD 件配 Headset 稳定急速，让体系极易起步。维修无人机 / 拾荒爪负责把自毁变成可持续循环。",
+        cards: [
+          { en: "LavaRoller", cn: "熔岩滚轮：自毁换灼烧的核心，越滚越烫", role: "core" },
+          { en: "Ornithopter", cn: "扑翼机：超低 CD 触发器，黑妹体系润滑剂", role: "engine" },
+          { en: "Headset", cn: "耳机：稳定急速来源，黑妹万金油", role: "engine" },
+          { en: "Parts Picker", cn: "拾荒爪：自毁联动回收，循环闭环件", role: "engine" },
+          { en: "Repair Drone", cn: "维修无人机：把自毁变成永动的关键", role: "engine" },
+          { en: "Fire Bomb / Flare Gun", cn: "燃烧弹/信号枪：灼烧小件补充", role: "filler" }
+        ],
+        ceiling: "灼烧无视护盾，滚雪球后连最肉的盾队也被烧穿。",
+        floor: "自毁链断档（缺维修/回收）时等于自残，摆位失误会瞬间清空自己。"
+      },
+      {
+        name: "Space Laser / Chicken Cannon 一炮流", tier: "T1", onset: "Day 6–9 憋炮",
+        desc: "充能体系的终极浪漫：Observatory / Altimeter / Propeller / Sirens 等引擎疯狂充能，太空激光或 S15 新欢鸡肉炮一炮（最多两炮）终结战斗。",
+        cards: [
+          { en: "Space Laser", cn: "太空激光：经典一炮核心", role: "core" },
+          { en: "Chicken Cannon", cn: "鸡肉炮：S15 新整活炮，充能体系新核心", role: "core" },
+          { en: "Observatory", cn: "天文台：大型充能引擎", role: "engine" },
+          { en: "Sirens", cn: "警笛：充能支援", role: "engine" },
+          { en: "Altimeter / Propeller", cn: "高度计/螺旋桨：飞行系充能小件", role: "engine" },
+          { en: "Hydraulic Squeezer", cn: "液压压缩机：充能加速器", role: "engine" }
+        ],
+        ceiling: "一炮带走任何盘面——理论上的『版本最优解终结者』。",
+        floor: "炮没充满人先没了：被快攻或冻结点名时毫无还手之力。"
+      },
+      {
+        name: "Private Runabout / Hang Glider 飞行节奏", tier: "T1.5", onset: "Day 5–8 拼图",
+        desc: "S15 新载具 Private Runabout 与老牌 Hang Glider（悬挂滑翔机）的起停（start-stop）体系：自带成长的飞行引擎打中速节奏，比一炮流稳，比滚轮灵活。",
+        cards: [
+          { en: "Private Runabout", cn: "私人快艇：S15 新载具核心", role: "core" },
+          { en: "Hang Glider", cn: "悬挂滑翔机：起停引擎，加强后可吃自身成长", role: "core" },
+          { en: "Airplane Glue", cn: "飞机胶水：飞行体系粘合剂", role: "engine" },
+          { en: "Paper Airplane / Clockwork Disc", cn: "纸飞机/发条飞盘：快速飞行小件", role: "filler" },
+          { en: "Gyro Gunsight / Marshalling Lights", cn: "陀螺瞄具/引导灯：飞行支援组", role: "filler" }
+        ],
+        ceiling: "节奏与成长兼得，中速对局几乎无短板。",
+        floor: "上限不如一炮和滚轮，纯靠质量取胜，逆风翻盘手段少。"
+      }
+    ],
+    phases: [
+      { key: "e", name: "前期", days: "Day 1–4",
+        goals: ["扑翼机+杂件打基础节奏，黑妹前期中规中矩别强求连胜", "Headset 见到必拿——它兼容黑妹所有流派", "自毁类小件先留着别乱卖，滚轮线的种子"],
+        picks: [
+          { en: "Ornithopter", cn: "体系润滑剂，最高优先小件", role: "engine" },
+          { en: "Headset", cn: "全流派通用急速，见到必拿", role: "engine" },
+          { en: "Goggles / Precision Calipers", cn: "护目镜/精密卡尺：便宜支援件", role: "filler" },
+          { en: "Flare Gun", cn: "信号枪：前期输出过渡", role: "filler" }
+        ],
+        shops: [
+          { s: "科技/载具专卖店", why: "黑妹小件大本营" },
+          { s: "综合商人（青铜）", why: "捡充能/飞行杂件" },
+          { s: "野怪（中等强度）", why: "黑妹前期盘面尚可，按强度表吃" },
+          { s: "技能商人", why: "充能/灼烧系技能提前看" }
+        ],
+        tips: ["黑妹是拼图职业：前期的每一件『暂时没用的小件』都可能是中期某条线的关键拼图，卖货前多想一步"] },
+      { key: "m", name: "中期", days: "Day 5–9",
+        goals: ["三线定轴：滚轮焚烧 / 一炮充能 / 飞行节奏，以货架核心为准", "滚轮线必须凑齐『自毁+回收』闭环再全力投入", "一炮线同时补生存件：憋炮期间不能裸奔"],
+        picks: [
+          { en: "LavaRoller", cn: "见滚轮基本可以定轴", role: "core" },
+          { en: "Space Laser / Chicken Cannon", cn: "炮线核心，黄金段重点搜寻", role: "core" },
+          { en: "Repair Drone + Parts Picker", cn: "滚轮闭环二件套", role: "engine" },
+          { en: "Observatory", cn: "炮线最大充能引擎", role: "engine" }
+        ],
+        shops: [
+          { s: "载具/科技专卖店", why: "核心与引擎主要来源，值得连刷" },
+          { s: "附魔奇遇", why: "滚轮上 Fiery、炮上 Deadly 都是质变" },
+          { s: "精英怪", why: "搏充能系技能与高品引擎" }
+        ],
+        tips: ["Day 8 还没摸到任何核心 → 转飞行节奏线保底，别硬憋炮"] },
+      { key: "l", name: "后期", days: "Day 10+",
+        goals: ["一炮线：把充能速度压到对手斩杀线之前，必要时补冻结拖时间", "滚轮线：灼烧量级拉满，专打护盾/再生肉队", "补反制：对面有干扰/摧毁时给核心上保护或备份"],
+        picks: [
+          { en: "核心高品复制", cn: "炮与滚轮升品收益巨大", role: "core" },
+          { en: "Icicle / 冻结件", cn: "给一炮争取的每一秒都是命", role: "tech" },
+          { en: "Hydraulic Squeezer（高品）", cn: "充能效率的最后一档", role: "engine" }
+        ],
+        shops: [
+          { s: "钻石商人", why: "高品炮/滚轮唯一稳定来源" },
+          { s: "附魔奇遇", why: "对位附魔决定镜像局胜负" },
+          { s: "高阶精英", why: "最后的技能缺口" }
+        ],
+        tips: ["黑妹后期对局本质是数学题：开打前心算『我的斩杀时间 vs 对面的斩杀时间』，差一秒就要补件"] }
+    ],
+    bounds: {
+      up: "上限：一炮流可以带走版本任何盘面，滚轮焚烧无视护盾——上限稳居第一梯队。",
+      down: "下限：七职业里最吃拼图的之一，核心断供时强度断崖；对摆位与时机的要求也高，熟练度不够慎选。"
+    }
+  },
+
+  /* ───────────────────────── 6. JULES 朱尔斯 ───────────────────────── */
+  {
+    id: "jules", en: "Jules", cn: "朱尔斯", nick: "厨师", hue: "#E87A7A",
+    tagline: "食物连发 · 灶台摆位 · 再生转伤",
+    tier: "T2", difficulty: 3,
+    s15: "厨师的灶台（Stove）与冷柜（Cooler）位置每局随机，摆位即强度，这也是他稳定性垫底的原因。S15 三条线：<b>Farmer's Market（农贸市场）</b>再生流依旧最稳；<b>Spice Rack（香料架）</b>重做后成了厨师版般若面具——快速食物连发推灼烧；<b>Freezer（冷冻柜）</b>冻结线作为新轴登场。社区戏称『所有厨厨开始嗦面』——快速食物小件就是本季厨师的命。",
+    builds: [
+      {
+        name: "Farmer's Market 农贸再生", tier: "T1", onset: "Day 4–7，市场越早越肉",
+        desc: "快速食物刷出海量再生，Bread Knife（面包刀）把再生转成实打实的伤害；农贸市场来得早还能顺手堆最大生命，越打越胖、越胖越疼。",
+        cards: [
+          { en: "Farmer's Market", cn: "农贸市场：食物体系心脏，再生+生命双修", role: "core" },
+          { en: "Bread Knife", cn: "面包刀：再生转伤害，本流派的胜负手", role: "core" },
+          { en: "Zarlic", cn: "扎蒜：快速食物小件，再生引擎", role: "engine" },
+          { en: "Strawberries / Pasta", cn: "草莓/意面：高频食物连发组", role: "engine" },
+          { en: "Oven", cn: "烤箱：大型终结件", role: "engine" }
+        ],
+        ceiling: "再生厚到打不动、面包刀输出还在涨——耗死一切非秒杀队。",
+        floor: "缺面包刀=只肉不疼，会被高成长队拖死。"
+      },
+      {
+        name: "Spice Rack 焚厨", tier: "T1.5", onset: "Day 5–8 见香料架定轴",
+        desc: "重做后的香料架是疯狂的灼烧增幅器：快速食物连发推层数，Grill（烧烤架）等终结件把火越烧越旺，失控速度极快。",
+        cards: [
+          { en: "Spice Rack", cn: "香料架：灼烧增幅核心，厨师版般若面具", role: "core" },
+          { en: "Grill", cn: "烧烤架：灼烧终结件", role: "engine" },
+          { en: "Instant Noodles", cn: "泡面：快速食物连发组，『嗦面』本体", role: "engine" },
+          { en: "Trail Mix", cn: "什锦果干：高频小食物", role: "engine" },
+          { en: "Serving Platter / Caviar", cn: "餐盘/鱼子酱：连发支援", role: "filler" }
+        ],
+        ceiling: "灼烧无视护盾，节奏起来后烧穿一切肉队。",
+        floor: "灶台位置烂时连发链卡顿，强度直接打七折。"
+      },
+      {
+        name: "Freezer / Giant Lollipop 冻结控制", tier: "T1.5", onset: "Day 6–9 拼控制链",
+        desc: "S15 新轴冷冻柜 + 老牌巨型棒棒糖（自带多重减速）的控制体系：用 Dishwasher / Cutting Board 喂伤害，靠冻住对面赢下时间差。",
+        cards: [
+          { en: "Freezer", cn: "冷冻柜：S15 冻结新核心", role: "core" },
+          { en: "Giant Lollipop", cn: "巨型棒棒糖：多重减速重锤", role: "core" },
+          { en: "Dishwasher", cn: "洗碗机：伤害成长引擎", role: "engine" },
+          { en: "Cutting Board", cn: "砧板：伤害增幅支援", role: "engine" },
+          { en: "Slow and Steady", cn: "技能·稳扎稳打：减速联动版本技能", role: "skill" }
+        ],
+        ceiling: "控制链拉满后对面全程慢动作，棒棒糖一锤一个。",
+        floor: "控制不满时不上不下，输出与生存两头不靠。"
+      }
+    ],
+    phases: [
+      { key: "e", name: "前期", days: "Day 1–4",
+        goals: ["开局先看灶台/冷柜位置——它决定你这局买什么、怎么摆", "快速食物小件铺场打节奏，再生件优先保血", "厨师前期不弱：连发链顺的话能偷不少胜场"],
+        picks: [
+          { en: "Zarlic / Strawberries", cn: "便宜快速食物，铺场基石", role: "engine" },
+          { en: "Instant Noodles", cn: "泡面：版本答案级小件，见到就拿", role: "engine" },
+          { en: "再生类小食物", cn: "血量即容错", role: "tech" },
+          { en: "Pizza Cutter", cn: "披萨刀：前期输出过渡", role: "filler" }
+        ],
+        shops: [
+          { s: "食材专卖店", why: "厨师小件大本营，第一优先" },
+          { s: "综合商人（青铜）", why: "捡杂项支援" },
+          { s: "野怪", why: "再生底子让厨师打野容错高" },
+          { s: "技能商人", why: "食物/再生/灼烧系技能" }
+        ],
+        tips: ["买之前先想『这件放哪』：放不进灶台/冷柜联动位的食物，价值要打折计算"] },
+      { key: "m", name: "中期", days: "Day 5–9",
+        goals: ["三选一定型：农贸再生 / 香料架焚厨 / 冷冻柜控制", "再生线死磕 Bread Knife——没有它再生只是拖时间", "重新规划摆位：核心进灶台联动位，连发链按触发顺序排"],
+        picks: [
+          { en: "Farmer's Market / Spice Rack / Freezer", cn: "三大核心见一收一", role: "core" },
+          { en: "Bread Knife", cn: "再生线胜负手，优先级等同核心", role: "core" },
+          { en: "Grill / Oven", cn: "终结件，定轴后补", role: "engine" },
+          { en: "Dishwasher", cn: "控制线的输出底盘", role: "engine" }
+        ],
+        shops: [
+          { s: "食材专卖店", why: "核心与连发件来源，值得连刷" },
+          { s: "附魔奇遇", why: "面包刀/烧烤架上对位附魔" },
+          { s: "精英怪", why: "中期盘面成型后再搏" }
+        ],
+        tips: ["厨师转型成本低（食物互相兼容），中期可以比别的职业晚 1 天定轴，但 Day 8 是底线"] },
+      { key: "l", name: "后期", days: "Day 10+",
+        goals: ["核心升品 + 摆位精修：后期每一格位置都要服务触发链", "再生线对镜像消耗局补输出，焚厨对肉队拉灼烧量级", "认清天敌：一炮流与高额秒杀是厨师的命门，补冻结/减速干扰"],
+        picks: [
+          { en: "核心高品复制", cn: "市场/香料架/冷冻柜升品", role: "core" },
+          { en: "Giant Lollipop（高品）", cn: "控制+输出双修的后期答案", role: "engine" },
+          { en: "减速/冻结件", cn: "干扰对面斩杀节奏", role: "tech" }
+        ],
+        shops: [
+          { s: "钻石商人", why: "高品核心来源" },
+          { s: "附魔奇遇", why: "最后的强度阀门" },
+          { s: "高阶精英", why: "补技能缺口" }
+        ],
+        tips: ["每天开打前把触发链从头到尾过一遍——厨师后期输掉的局，一半输在摆位没跟上转型"] }
+    ],
+    bounds: {
+      up: "上限：农贸再生+面包刀成型后越打越肉、输出还高，是镜像消耗局的最终赢家；焚厨爆发同样能冲 10 胜。",
+      down: "下限：灶台/冷柜 RNG 让同一套牌强度上下浮动 30%，是七职业里稳定性最差的；好在再生底子兜底，烂局也常有 5–6 胜。"
+    }
+  },
+
+  /* ───────────────────────── 7. KARNOK 卡诺克 ───────────────────────── */
+  {
+    id: "karnok", en: "Karnok", cn: "卡诺克", nick: "猎人", hue: "#A0B86A",
+    tagline: "激怒爆发 · 兽群伙伴 · 自减速体系",
+    tier: "T0", difficulty: 4,
+    s15: "最新英雄（S12 登场），机制围绕<b>激怒（Enrage）</b>与<b>自减速（Self-Slow）</b>。S15 主轴 <b>Runic Claymore（符文巨剑）</b>冷却 +1s 但增伤 10%→15%，百分比伤害照样后期无敌；两条新线 <b>Dual Reaver（双裂收割者）</b>与 <b>Waystones（路标石）</b>登场。Great Eagle（巨鹰）的翻倍效果仍是所有猎人体系的质变点。",
+    builds: [
+      {
+        name: "Runic Claymore 符文巨剑", tier: "T0.5", onset: "Day 4–7 见巨剑定轴",
+        desc: "百分比伤害的巨剑配合巨鹰翻倍，硬、快、还能靠稳定暴击吸血站场——攻防一体的全能主轴，S15 微调后依旧是猎人第一选择。",
+        cards: [
+          { en: "Runic Claymore", cn: "符文巨剑：百分比伤害核心，越后期越离谱", role: "core" },
+          { en: "Great Eagle", cn: "巨鹰：增益翻倍，全体系质变点", role: "core" },
+          { en: "Hunter's Journal", cn: "猎人日志：成长记录引擎", role: "engine" },
+          { en: "Flying Squirrel", cn: "飞鼠：快速伙伴支援", role: "engine" },
+          { en: "Messenger Sparrow / Hunting Knife", cn: "信使麻雀/猎刀：小件节奏组", role: "filler" }
+        ],
+        ceiling: "巨剑稳定暴击后伤害+吸血双在线，后期成长性全游戏顶级。",
+        floor: "S15 冷却+1s 后前中期手感变钝，没巨鹰时只是把好剑而非体系。"
+      },
+      {
+        name: "Self-Slow 自减速锁链", tier: "T1", onset: "Day 5–8 拼组合",
+        desc: "主动减速自己换取 Chains（锁链）的高效成长：霰弹枪+帐篷的弹药变体，或蟒蛇绞杀流配猎人之靴等工具件——组合多、套路深，是猎人玩家的进阶课。",
+        cards: [
+          { en: "Chains", cn: "锁链：自减速体系的成长核心", role: "core" },
+          { en: "Shotgun", cn: "霰弹枪：弹药变体主输出", role: "engine" },
+          { en: "Tent", cn: "帐篷：弹药补给站，霰弹枪的弹仓", role: "engine" },
+          { en: "Boa Constrictor", cn: "蟒蛇：绞杀变体核心伙伴", role: "engine" },
+          { en: "Hunter's Boots / Hunter's Blind", cn: "猎人之靴/狩猎掩体：灵活工具组", role: "tech" },
+          { en: "Fairy Circle", cn: "蘑菇圈：体系支援件", role: "filler" }
+        ],
+        ceiling: "锁链成长效率极高，中后期数值滚到对手绝望。",
+        floor: "自减速节奏没算好=单纯变慢，会被快攻按着打。"
+      },
+      {
+        name: "Giant Sling / 新体系（Dual Reaver · Waystones）", tier: "T1", onset: "Day 6–9 看件",
+        desc: "激怒态下伤害爆炸的 Giant Sling（巨型投石索）弹药爆发，飞鼠+巨鹰把倍率叠上天；S15 新增 Dual Reaver 双持与 Waystones 路标石两条线，赛季初强度仍在探索，敢练就是版本红利。",
+        cards: [
+          { en: "Giant Sling", cn: "巨型投石索：激怒弹药爆发核心", role: "core" },
+          { en: "Dual Reaver", cn: "双裂收割者：S15 新双持核心", role: "core" },
+          { en: "Waystones", cn: "路标石：S15 新体系核心", role: "core" },
+          { en: "Bandoleer", cn: "弹药带：弹药系支援", role: "engine" },
+          { en: "Flare", cn: "照明弹：触发支援小件", role: "filler" }
+        ],
+        ceiling: "激怒倍率+巨鹰翻倍，一轮爆发数字夸张；新体系上限待开发。",
+        floor: "爆发窗口短，错过激怒节拍输出真空；新线攻略少，全靠自己摸。"
+      }
+    ],
+    phases: [
+      { key: "e", name: "前期", days: "Day 1–4",
+        goals: ["猎刀/锁链小件起手，兽群伙伴见到先囤", "搞懂激怒触发条件——猎人的爆发全在激怒窗口里", "目标 Day 4 前 2–3 胜，节奏属于中上"],
+        picks: [
+          { en: "Hunting Knife", cn: "便宜节奏武器", role: "filler" },
+          { en: "Chains", cn: "自减速线的种子，早拿早成长", role: "engine" },
+          { en: "Flying Squirrel / Messenger Sparrow", cn: "便宜伙伴，体系通用", role: "engine" },
+          { en: "激怒触发小件", cn: "保证激怒在线的件优先级高于裸数值", role: "tech" }
+        ],
+        shops: [
+          { s: "兽群/狩猎专卖店", why: "猎人本系大本营" },
+          { s: "武器商人", why: "巨剑与过渡武器来源" },
+          { s: "野怪", why: "猎人前期盘面不差，正常吃野" },
+          { s: "技能商人", why: "激怒/暴击系技能提前锁" }
+        ],
+        tips: ["新英雄攻略池浅：多看自己的战斗回放，理解激怒/自减速的真实触发顺序，比抄表更涨分"] },
+      { key: "m", name: "中期", days: "Day 5–9",
+        goals: ["主轴抉择：巨剑（最稳）/ 自减速锁链（最深）/ 投石索与新线（最莽）", "Great Eagle 见到必拿——它是所有路线共同的质变点", "Day 9 前 5 胜+主轴成型"],
+        picks: [
+          { en: "Runic Claymore", cn: "黄金货架最高优先", role: "core" },
+          { en: "Great Eagle", cn: "全路线通用翻倍器，优先级等同核心", role: "core" },
+          { en: "Shotgun + Tent", cn: "自减速弹药二件套，成对收", role: "engine" },
+          { en: "Hunter's Journal", cn: "成长引擎，巨剑线标配", role: "engine" }
+        ],
+        shops: [
+          { s: "兽群/武器专卖店", why: "核心定向搜寻，值得连刷" },
+          { s: "附魔奇遇", why: "巨剑上 Deadly（暴击）是质变" },
+          { s: "精英怪", why: "猎人中期盘面硬，多搏技能" }
+        ],
+        tips: ["S15 巨剑 CD+1s：中期别再指望它单卡打天下，节奏件要比上赛季多备一手"] },
+      { key: "l", name: "后期", days: "Day 10+",
+        goals: ["巨剑线：暴击率拉满解锁吸血站场，百分比伤害自动跟上版本", "锁链线：成长数值滚到镜像无敌，补减速干扰对手", "对位思考：猎人后期怕被冻结点名核心，备好应对"],
+        picks: [
+          { en: "核心高品复制", cn: "巨剑/锁链升品", role: "core" },
+          { en: "Great Eagle（高品）", cn: "翻倍器升级=全队升级", role: "core" },
+          { en: "减速/控制件", cn: "把对手拖进自己的节奏", role: "tech" }
+        ],
+        shops: [
+          { s: "钻石商人", why: "高品核心与传说兽群" },
+          { s: "附魔奇遇", why: "对位附魔收尾" },
+          { s: "高阶精英", why: "最后的技能拼图" }
+        ],
+        tips: ["新英雄的版本红利期：对手普遍不熟悉猎人的激怒节拍，主动权在你手里"] }
+    ],
+    bounds: {
+      up: "上限：巨剑百分比伤害+巨鹰翻倍的后期成长性全游戏顶级，S15 开局与马克并列版本之巅。",
+      down: "下限：机制（激怒/自减速）理解门槛高，节奏算错就是自废武功；新线攻略少，下限非常吃个人熟练度。"
+    }
+  }
+  ]
+};
+/* ════════════════ ▲▲▲ 数据区结束，以下为渲染代码（无需改动）▲▲▲ ════════════════ */
+
+const ROLE_NAMES = { core:"核心", engine:"引擎", filler:"过渡", tech:"反制", skill:"技能" };
+const ROLE_COLORS = { core:"var(--legend)", engine:"var(--gold)", filler:"var(--bronze)", tech:"var(--diamond)", skill:"var(--ok)" };
+const esc = s => String(s ?? "").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+const rich = s => esc(s).replace(/&lt;b&gt;/g,"<b>").replace(/&lt;\/b&gt;/g,"</b>");
+
+function cardChip(c){
+  return `<div class="card r-${c.role||'filler'}">
+    <div class="cname">${esc(c.en)}</div>
+    <div class="role">${ROLE_NAMES[c.role]||"过渡"}</div>
+    <div class="cn">${esc(c.cn)}</div></div>`;
+}
+function pips(n){ let h=""; for(let i=1;i<=5;i++) h+=`<span class="pip${i<=n?' on':''}"></span>`; return `<span class="pips">${h}</span>`; }
+
+function renderHero(h){
+  const builds = h.builds.map(b=>`
+    <article class="build">
+      <div class="bt"><h3>${esc(b.name)}</h3><span class="btier">${esc(b.tier)}</span></div>
+      <div class="onset">⏱ ${esc(b.onset)}</div>
+      <p class="desc">${rich(b.desc)}</p>
+      <div class="cards">${b.cards.map(cardChip).join("")}</div>
+      <div class="bounds">
+        <div class="b up"><b>上限</b>${esc(b.ceiling)}</div>
+        <div class="b down"><b>下限</b>${esc(b.floor)}</div>
+      </div>
+    </article>`).join("");
+
+  const phases = h.phases.map(p=>`
+    <article class="phase ${p.key}">
+      <header><span class="pname">${esc(p.name)}</span><span class="pdays">${esc(p.days)}</span></header>
+      <div class="grid">
+        <div class="cell"><div class="ct">路线目标 GOALS</div>
+          <ul class="plain">${p.goals.map(g=>`<li>${rich(g)}</li>`).join("")}</ul></div>
+        <div class="cell"><div class="ct">进店顺序 SHOP ORDER</div>
+          <ol class="shops">${p.shops.map(s=>`<li>${esc(s.s)}<span class="why">${esc(s.why)}</span></li>`).join("")}</ol></div>
+        <div class="cell full"><div class="ct">抓牌顺序 PICK PRIORITY（从上到下）</div>
+          <div class="cards">${p.picks.map(cardChip).join("")}</div></div>
+        ${p.tips?.length?`<div class="cell full"><div class="ct">注意点 NOTES</div>
+          <ul class="plain">${p.tips.map(t=>`<li class="sub">${rich(t)}</li>`).join("")}</ul></div>`:""}
+      </div>
+    </article>`).join("");
+
+  return `
+  <div style="--hue:${h.hue}">
+    <div class="hero-head">
+      <div class="row">
+        <span class="hero-name">${esc(h.cn)}<span class="en">${esc(h.en)}</span></span>
+        <span class="hero-nick">${esc(h.nick)}</span>
+      </div>
+      <div class="hero-tags">${esc(h.tagline)}</div>
+      <div class="stat-row">
+        <div class="stat"><div class="k">梯队 TIER</div><div class="v tier">${esc(h.tier)}</div></div>
+        <div class="stat"><div class="k">上手难度</div><div class="v">${pips(h.difficulty)}</div></div>
+      </div>
+      <div class="s15-note"><b>S15 变动</b> · ${rich(h.s15)}</div>
+    </div>
+
+    <h2>主流流派 <span class="en">META BUILDS · S15</span></h2>
+    <div class="legend-roles">
+      <span><i style="background:${ROLE_COLORS.core}"></i>核心 CORE</span>
+      <span><i style="background:${ROLE_COLORS.engine}"></i>引擎 ENGINE</span>
+      <span><i style="background:${ROLE_COLORS.filler}"></i>过渡 FILLER</span>
+      <span><i style="background:${ROLE_COLORS.tech}"></i>反制/工具 TECH</span>
+      <span><i style="background:${ROLE_COLORS.skill}"></i>技能 SKILL</span>
+    </div>
+    <div class="builds">${builds}</div>
+
+    <h2>分阶段运营 <span class="en">ROUTE BY PHASE</span></h2>
+    <div class="rail">
+      <div class="seg e">前期<span class="days">DAY 1–4 · 青铜</span></div>
+      <div class="seg m">中期<span class="days">DAY 5–9 · 黄金</span></div>
+      <div class="seg l">后期<span class="days">DAY 10+ · 钻石</span></div>
+    </div>
+    ${phases}
+
+    <h2>职业上下限总评 <span class="en">CEILING / FLOOR</span></h2>
+    <div class="hero-bounds">
+      <div class="panel"><div class="ct">上限 CEILING</div>${esc(h.bounds.up)}</div>
+      <div class="panel low"><div class="ct">下限 FLOOR</div>${esc(h.bounds.down)}</div>
+    </div>
+  </div>`;
+}
+
+function renderOverview(d){
+  const heroById = Object.fromEntries(d.heroes.map(h=>[h.id,h]));
+  const tiers = d.tiers.map(t=>`
+    <div class="tierrow">
+      <div class="tl" style="background:${t.tier==="T0"?"var(--legend)":t.tier==="T1"?"var(--gold)":t.tier==="T1.5"?"var(--silver)":"var(--bronze)"}">${esc(t.tier)}</div>
+      <div class="tr">
+        ${t.heroes.map(id=>{const h=heroById[id];return h?`<button class="hero-chip" data-goto="${h.id}"><span class="dot" style="background:${h.hue}"></span>${esc(h.cn)} · ${esc(h.nick)}</button>`:""}).join("")}
+        <span style="color:var(--dim);font-size:12.5px;align-self:center">${esc(t.note)}</span>
+      </div>
+    </div>`).join("");
+
+  const blocks = d.general.blocks.map(b=>`
+    <div class="panel" style="margin-top:14px"><h3>${esc(b.title)}</h3>
+      <ul class="plain">${b.items.map(i=>`<li>${rich(i)}</li>`).join("")}</ul></div>`).join("");
+
+  const log = d.meta.changelog.map(c=>`<tr><td class="mono">${esc(c.date)}</td><td>${esc(c.text)}</td></tr>`).join("");
+
+  return `
+    <h2 style="margin-top:6px">赛季速览 <span class="en">SEASON ${esc(d.meta.season)} OVERVIEW</span></h2>
+    <p class="lead">${esc(d.general.intro)}</p>
+    <h2>职业梯队（赛季初参考，争议大，热修后会变）<span class="en">TIER LIST</span></h2>
+    <div class="tierlist">${tiers}</div>
+    <h2>通用运营 <span class="en">FUNDAMENTALS</span></h2>
+    ${blocks}
+
+    <h2>如何更新本攻略 <span class="en">HOW TO UPDATE</span></h2>
+    <div class="panel update-box">
+      <ul class="plain">
+        <li><b>方式一（推荐）</b>：打开本 HTML 文件，所有内容都在顶部 <code class="k">GUIDE_DATA</code> 一个对象里——改数据即改全站，渲染代码永远不用动。新增流派/卡牌只需照着现有条目复制一份。</li>
+        <li><b>方式二（AI 协作）</b>：把新赛季补丁说明丢给 AI，让它“只输出更新后的 GUIDE_DATA 对象”，整段替换即可，一分钟完成版本迭代。</li>
+        <li><b>方式三（临时热更）</b>：把新的 GUIDE_DATA JSON 粘贴到下方文本框点「应用」，页面立即用新数据重渲染（仅本次打开有效，刷新还原）。可先点「导出当前数据」拿到模板。</li>
+      </ul>
+      <textarea id="jsonIn" placeholder='粘贴完整的 GUIDE_DATA JSON（可先点“导出当前数据”获取模板）…' spellcheck="false"></textarea>
+      <div class="btnrow">
+        <button class="btn" id="btnApply">应用粘贴的数据</button>
+        <button class="btn ghost" id="btnExport">导出当前数据（复制到剪贴板）</button>
+      </div>
+      <div class="msg" id="jsonMsg"></div>
+    </div>
+
+    <h2>更新日志 <span class="en">CHANGELOG</span></h2>
+    <table><thead><tr><th style="width:130px">日期</th><th>内容</th></tr></thead><tbody>${log}</tbody></table>`;
+}
+
+/* ── 渲染骨架 ── */
+let DATA = GUIDE_DATA;
+let currentPage = "overview";
+
+function build(){
+  const tabBar = document.getElementById("tabBar");
+  const content = document.getElementById("content");
+  const tabs = [{id:"overview", label:"总览", nick:"S"+ (DATA.meta.season||"").replace(/^S/,""), hue:"var(--brass)"}]
+    .concat(DATA.heroes.map(h=>({id:h.id,label:h.cn,nick:h.nick,hue:h.hue})));
+
+  tabBar.innerHTML = tabs.map(t=>
+    `<button class="tab${t.id===currentPage?' active':''}" data-page="${t.id}" style="--hue:${t.hue}">
+       <span class="dot"></span>${esc(t.label)}<span class="nick">${esc(t.nick)}</span></button>`).join("");
+
+  content.innerHTML =
+    `<section class="page${currentPage==='overview'?' active':''}" id="pg-overview">${renderOverview(DATA)}</section>` +
+    DATA.heroes.map(h=>`<section class="page${currentPage===h.id?' active':''}" id="pg-${h.id}">${renderHero(h)}</section>`).join("");
+
+  document.getElementById("metaBadges").innerHTML =
+    `<span class="badge">SEASON ${esc(DATA.meta.season)}</span>
+     <span class="badge soft">数据基准 ${esc(DATA.meta.dataDate)}</span>
+     <span class="badge soft">v${esc(DATA.meta.siteVersion)}</span>
+     <span class="badge soft" title="${esc(DATA.meta.confidence)}">ⓘ ${esc(DATA.meta.confidence.slice(0,28))}…</span>`;
+
+  document.getElementById("footSrc").innerHTML = "数据来源：" +
+    DATA.meta.sources.map(s=>`<a href="${esc(s.url)}" target="_blank" rel="noopener">${esc(s.name)}</a>`).join(" · ");
+
+  tabBar.querySelectorAll(".tab").forEach(b=>b.addEventListener("click",()=>go(b.dataset.page)));
+  content.querySelectorAll("[data-goto]").forEach(b=>b.addEventListener("click",()=>go(b.dataset.goto)));
+  bindUpdatePanel();
+}
+
+function go(id){
+  currentPage = id;
+  document.querySelectorAll(".tab").forEach(b=>b.classList.toggle("active",b.dataset.page===id));
+  document.querySelectorAll("section.page").forEach(s=>s.classList.toggle("active",s.id==="pg-"+id));
+  window.scrollTo({top:0});
+}
+
+function bindUpdatePanel(){
+  const msg = document.getElementById("jsonMsg");
+  const ta = document.getElementById("jsonIn");
+  const apply = document.getElementById("btnApply");
+  const exp = document.getElementById("btnExport");
+  if(!apply) return;
+  apply.addEventListener("click",()=>{
+    try{
+      const next = JSON.parse(ta.value);
+      if(!next.heroes || !next.meta) throw new Error("缺少 heroes / meta 字段");
+      DATA = next; currentPage = "overview"; build();
+      document.getElementById("jsonMsg").className="msg ok";
+      document.getElementById("jsonMsg").textContent="✓ 已应用新数据并重渲染（刷新页面将还原为文件内置数据）";
+    }catch(e){ msg.className="msg err"; msg.textContent="✗ JSON 解析失败："+e.message; }
+  });
+  exp.addEventListener("click",async()=>{
+    const txt = JSON.stringify(DATA,null,2);
+    try{ await navigator.clipboard.writeText(txt); msg.className="msg ok"; msg.textContent="✓ 当前 GUIDE_DATA 已复制到剪贴板"; }
+    catch(e){ ta.value = txt; msg.className="msg ok"; msg.textContent="✓ 已输出到文本框（剪贴板不可用时的降级方案）"; }
+  });
+}
+
+build();
+</script>
+</body>
+</html>

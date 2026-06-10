@@ -4,6 +4,16 @@
 
 纯静态站，无构建步骤、无运行时依赖。
 
+## 在线访问（GitHub Pages）
+
+部署 workflow 已就位（`.github/workflows/deploy-pages.yml`），但 **Pages 需要仓库所有者做一次性开启**（私有仓库在免费计划下不支持 Pages）：
+
+1. 仓库 Settings → General → Danger Zone → **Change visibility → Public**（攻略站本身就是公开内容；想保持私有则需 GitHub Pro，且 Pages 站点仍是公开可访问的）
+2. 仓库 Settings → **Pages** → Build and deployment → Source 选 **GitHub Actions**
+3. 到 Actions → Deploy GitHub Pages → **Run workflow**（或随便推一个 commit）
+
+之后站点地址固定为：**https://corgii-123.github.io/the-bazaar-tips/**。push 到 `main` 会自动重新部署。
+
 ## 本地运行
 
 浏览器不允许从 `file://` 直接 fetch JSON，所以需要任意一个静态服务器：

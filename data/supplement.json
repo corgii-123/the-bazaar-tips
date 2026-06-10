@@ -1,0 +1,64 @@
+{
+  "meta": {
+    "purpose": "补充 howbazaar API 快照中缺失、但已通过社区来源核实存在的卡牌。条目 schema 与 all_items.json 对齐（缺图片则无 images 字段），所有条目带 communityData=true 标记，页面会注明『效果文本摘自社区数据库，以游戏内为准』。",
+    "criteria": "只收录效果文本有明确来源（bazaardb.gg / mobalytics 等）的卡，宁缺毋滥；攻略中引用但效果未核实的 Karnok DLC 卡不在此列，由页面以无数据芯片优雅降级。",
+    "updated_at": "2026-06-10",
+    "sources": [
+      "https://bazaardb.gg/card/15vy4pm57mpj2qm90s1kbhqfw8w/Private-Jet",
+      "https://bazaardb.gg/card/14x6h3wf4hnt8gb52zs4xsk6zl3/Waystones",
+      "https://bazaardb.gg/card/ml64c29w89xh9k14lp1xg9cp3b/Dual-Reaver"
+    ]
+  },
+  "data": [
+    {
+      "name": "Private Jet",
+      "kind": "item",
+      "startingTier": "Silver",
+      "size": "Large",
+      "heroes": ["Pygmalien"],
+      "tags": ["Vehicle"],
+      "unifiedTooltips": [
+        "Cooldown (4/3/2) seconds",
+        "This item and an adjacent item start Flying",
+        "Adjacent items gain +Damage, +Shield and +Heal equal to their Value",
+        "When you use a Flying item, adjacent items gain (+5/+15) Value"
+      ],
+      "communityData": true,
+      "communityNote": "Patch 15.0 新物品，howbazaar 快照未收录；效果摘自 bazaardb.gg，以游戏内为准。",
+      "sourceUrl": "https://bazaardb.gg/card/15vy4pm57mpj2qm90s1kbhqfw8w/Private-Jet"
+    },
+    {
+      "name": "Waystones",
+      "kind": "item",
+      "startingTier": "Bronze",
+      "size": "Medium",
+      "heroes": ["Karnok"],
+      "tags": [],
+      "unifiedTooltips": [
+        "Cooldown (5/4/3/2) seconds",
+        "Haste another item for 1 second(s)"
+      ],
+      "communityData": true,
+      "communityNote": "Karnok DLC 物品，howbazaar 数据源未收录 DLC；效果摘自 bazaardb.gg，以游戏内为准。",
+      "sourceUrl": "https://bazaardb.gg/card/14x6h3wf4hnt8gb52zs4xsk6zl3/Waystones"
+    },
+    {
+      "name": "Dual Reaver",
+      "kind": "item",
+      "startingTier": "Silver",
+      "size": "Large",
+      "heroes": ["Karnok"],
+      "tags": ["Weapon"],
+      "unifiedTooltips": [
+        "Cooldown (7/5/3) seconds",
+        "Multicast 2",
+        "Deal 25 Damage",
+        "When you Haste, this gains Crit Chance",
+        "This has +Damage equal to its Crit Chance"
+      ],
+      "communityData": true,
+      "communityNote": "Karnok DLC 物品，howbazaar 数据源未收录 DLC；效果摘自 bazaardb.gg，以游戏内为准。",
+      "sourceUrl": "https://bazaardb.gg/card/ml64c29w89xh9k14lp1xg9cp3b/Dual-Reaver"
+    }
+  ]
+}

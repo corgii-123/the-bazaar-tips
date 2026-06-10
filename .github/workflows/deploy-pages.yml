@@ -2,7 +2,8 @@ name: Deploy GitHub Pages
 
 on:
   push:
-    branches: [main]
+    # claude/* 为开发分支预览入口，合并进 main 后可删掉这一项
+    branches: [main, "claude/charming-lovelace-g7stqc"]
   workflow_dispatch:
 
 permissions:

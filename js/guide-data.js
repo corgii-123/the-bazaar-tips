@@ -21,9 +21,9 @@
 window.GUIDE_DATA = {
   meta: {
     season: "S15",
-    dataDate: "2026-06-10",
-    siteVersion: "2.0.0",
-    confidence: "攻略文本基于 S15（Patch 15.x，2026-06）公开资料与 10 胜实战构筑；卡面数据快照拉取于 2026-06-10（howbazaar API），该源尚未完全同步 S15 全部改动（如 Rifle / Railgun / Spice Rack），冲突处一律以游戏内为准",
+    dataDate: "2026-06-11",
+    siteVersion: "2.1.0",
+    confidence: "攻略文本基于 S15（Patch 15.x，2026-06）公开资料与 10 胜实战构筑；流派来源遵循时效规则：只采用 S14/S15（Patch 14.x–15.x）来源，更早赛季的记录仅在机制经当前卡面数据验证后作为补充并标注赛季。卡面数据快照拉取于 2026-06-10（howbazaar API），该源尚未完全同步 S15 全部改动（如 Rifle / Railgun / Spice Rack / Athanor / Library），冲突处一律以游戏内为准",
     dataNote: "卡面快照统计：物品 926 / 技能 386。已知缺口：Karnok DLC 物品与技能未被数据源收录（仅 Jerky 一件）；Private Jet 等极新物品由 data/supplement.json 按社区来源补录并标注。",
     sources: [
       { name: "Mobalytics · S15 Meta Builds", url: "https://mobalytics.gg/the-bazaar/guides/meta-builds" },
@@ -34,6 +34,7 @@ window.GUIDE_DATA = {
       { name: "B 站国服社区攻略检索", url: "https://search.bilibili.com/all?keyword=大巴扎攻略" }
     ],
     changelog: [
+      { date: "2026-06-11", text: "v2.1.0 内容勘误（玩家反馈）：① 海盗高手弹药改为互踩体系——Repeater（连发步枪）×Throwing Knives（飞刀）100% 暴击互踩 + Blunderbuss（雷铳）×Incendiary Rounds 自点火（Mobalytics Knife Repeater / Kripp Infinite Blunderbuss 构筑证实）；② 新增海盗 Slumbering Primordial（克苏鲁）流派，移除来历不明的『暴击毒武器线』；③ 机宝新增国服『全能核弱点流』（The Core + Weakpoint Detector + Cool LEDs 三段泵）；④ 按 15.0 补丁修正：Athanor 不再产催化剂、Library 移除武器冷却惩罚、Holsters 回归开场触发；⑤ 确立来源时效规则：流派只采用 S14/S15 来源。" },
       { date: "2026-06-10", text: "v2.0.0 重构：① 接入 items/skills 全量数据，卡片带图与真实效果文本，新增「卡牌图鉴」页；② 瓦妮莎补全高手弹药快攻（Gunslinger，Kripp 06-07 构筑+多份 10 胜记录）；③ 修正旗舰机制（按物品种类叠 Multicast，非武器加伤）、Chicken Cannon（护盾转化而非一炮流）、Athanor 品阶、Rifle 改动定性等错误；④ Karnok 按 DLC 真实 meta 重写（Runic Claymore / 弹药自减速 / Dual Reaver+Waystones）；⑤ 全站流派标注来源。" },
       { date: "2026-06-10", text: "v1.0.0 建站：S15 赛季初 7 职业全量攻略上线" }
     ]
@@ -77,33 +78,33 @@ window.GUIDE_DATA = {
   /* ───────────────────────── 1. VANESSA 瓦妮莎（海盗） ───────────────────────── */
   {
     id: "vanessa", en: "Vanessa", cn: "瓦妮莎", nick: "海盗", hue: "#4FB7A8",
-    tagline: "弹药快攻 · 旗舰杂货 · 水族伙伴 · 暴击转毒",
+    tagline: "弹药互踩 · 旗舰杂货 · 水族伙伴 · 克苏鲁",
     tier: "T1", difficulty: 2,
-    s15: "本季海盗有两条快车道：<b>弹药快攻（Gunslinger）</b>是当前公认的高手上限答案——Pistol Sword + Holsters 的弹药触发链配满弹药技能，数秒内打出爆发与暴击毒（Kripp 06-07 更新构筑，另有多份 10-0 实战记录）；<b>Flagship（旗舰）</b>S15 伤害与冷却双加强、白银品阶 Day 2 可见，注意其真实机制是<b>每多一种「工具/地产/伙伴/弹药/遗物」物品 +1 Multicast</b>，吃的是货架多样性而不是堆武器。另：Rifle 改为 2 秒冷却但成长减半，曾经的 Day 1 Rifle+Ramrod 开局被砍弱，别再照旧攻略抄。",
+    s15: "本季海盗的高手答案是<b>弹药互踩体系</b>：Repeater（连发步枪）『每使用一个其他弹药物品就自动开火』× Throwing Knives（飞刀）『其他物品暴击时自动出手』——步枪堆到 <b>100% 暴击</b>后两者左右互踩无限往返；后期再上 Blunderbuss（雷铳）『你每次灼烧时自动开火』配 Incendiary Rounds 自己点自己的火。<b>Holsters 在 15.0 回归开场触发形态</b>，起手提速一截。<b>Flagship（旗舰）</b>S15 加强、白银 Day 2 可定轴（机制：每多一种「工具/地产/伙伴/弹药/遗物」+1 Multicast，吃货架多样性而非堆武器）。注意：Rifle 改 2 秒冷却但成长减半，老的 Day 1 Rifle+Ramrod 开局已被砍弱。",
     builds: [
       {
-        name: "Gunslinger 弹药快攻（高手弹药）", tier: "T0.5", onset: "Day 3–6 凑链，技能到位即起飞", featured: true,
-        desc: "围绕「弹药触发链」的爆发体系：Pistol Sword 在你每次使用弹药物品时追加一刀，Holsters 开场加速全部小件让整条链 0 秒启动，Shuriken 的 Multicast 等于当前弹药数。再配弹药技能三件套——Gunner（全物品+弹药上限）、Loaded Fury（按场上弹药总数给武器加伤）、Parting Shot（弹药物品使用后叠暴击）——暴击起来后接深海弯刀转毒。不是一炮流，但打起来像一炮流。",
+        name: "Gunslinger 弹药互踩（高手弹药）", tier: "T0.5", onset: "Day 3–6 搭循环，暴击到位即起飞", featured: true,
+        desc: "三层互踩的爆发体系：① <b>连发步枪 × 飞刀</b>——把 Repeater 堆到 100% 暴击后，步枪暴击触发飞刀、飞刀出手又算「使用弹药物品」反过来触发步枪，左右互踩无限往返；② 后期 <b>雷铳 × 燃烧弹药</b>自点火——雷铳开火带动相邻燃烧弹药灼烧，灼烧又触发雷铳『灼烧时自动开火』，自己点自己；③ 手枪剑给每一次弹药触发追加一刀。配 Gunner / Loaded Fury / Parting Shot 弹药技能包，循环闭合后几秒内雪崩。",
         cards: [
-          { en: "Pistol Sword", cn: "手枪剑：每使用一个弹药物品就追加一刀，弹药链的伤害出口", role: "core" },
-          { en: "Holsters", cn: "枪套：开场加速你的全部小件 1–2 秒，链条 0 秒起步", role: "core" },
-          { en: "Shuriken", cn: "手里剑：Multicast=当前弹药数，吃满 Gunner 后一轮多段", role: "engine" },
-          { en: "Powder Horn", cn: "火药角：每 4 秒给右侧装弹，链条的燃料泵", role: "engine" },
-          { en: "Revolver", cn: "左轮：3 秒 6 发的高频弹药触发器，前期就能用", role: "engine" },
-          { en: "Throwing Knives", cn: "飞刀：你其他物品暴击时自动跟射，暴击成型后的倍增器", role: "engine" },
-          { en: "Scimitar of the Deep", cn: "深海弯刀：暴击转化 20% 伤害的中毒，后期上限出口", role: "core" },
-          { en: "Grapeshot", cn: "葡萄弹：使用其他弹药物品时回填 1 发，链条润滑剂", role: "filler" },
-          { en: "Gunner", cn: "技能·炮手：全物品+弹药上限，手里剑/左轮直接质变", role: "skill" },
+          { en: "Repeater", cn: "连发步枪：每用一个其他弹药物品就跟进开火，互踩循环的心脏", role: "core" },
+          { en: "Throwing Knives", cn: "飞刀：其他物品暴击时自动出手，与步枪互为扳机", role: "core" },
+          { en: "Pistol Sword", cn: "手枪剑：每次弹药触发追加一刀，循环的伤害放大器", role: "core" },
+          { en: "Crow's Nest", cn: "鸦巢：全武器大额暴击率，把步枪推上 100% 暴击的关键地基", role: "engine" },
+          { en: "Holsters", cn: "枪套：开场加速小件（金色起飞刀 1.5 秒进循环），15.0 回归开场形态", role: "engine" },
+          { en: "Blunderbuss", cn: "雷铳：你每次灼烧时自动开火（钻石起），后期接管循环的上限件", role: "core" },
+          { en: "Incendiary Rounds", cn: "燃烧弹药：相邻物品使用时灼烧，雷铳自循环的点火器", role: "engine" },
+          { en: "Scimitar of the Deep", cn: "深海弯刀：暴击转 20% 伤害的中毒，循环成型后的对肉队出口", role: "engine" },
+          { en: "Gunner", cn: "技能·炮手：全物品+弹药上限，循环的续航底座", role: "skill" },
           { en: "Loaded Fury", cn: "技能·装填之怒：武器按场上弹药总数加伤，本体即斩杀线", role: "skill" },
-          { en: "Parting Shot", cn: "技能·临别一击：弹药物品使用后叠暴击率", role: "skill" },
+          { en: "Parting Shot", cn: "技能·临别一击：弹药物品使用后叠暴击率，凑 100% 的最后一块", role: "skill" },
           { en: "Sharpshooter", cn: "技能·神射手：弹药物品+暴击率，青铜即可拿的地基", role: "skill" }
         ],
-        ceiling: "上限自成一档（Kripp 原话 in a class of its own）：链条+技能齐了之后数秒内暴击和中毒指数叠加，肉队快队通杀。",
-        floor: "下限也不低——弹药武器裸数值开打就有；但技能缺位时爆发不足，前 4 天要靠快速武器节奏垫底。",
+        ceiling: "循环闭合即雪崩：步枪×飞刀逐帧往返输出、雷铳点火后停不下来——上限自成一档（Kripp 原话 in a class of its own）。",
+        floor: "100% 暴击是硬门槛，差一截循环就断断续续；凑不齐时退回手枪剑+枪套的普通弹药快攻，强度仍在线但只是快攻不是无限。",
         sources: [
-          { name: "Kripp · Gunslinger Aggro Vanessa（06-07 更新）", url: "https://mobalytics.gg/the-bazaar/builds/gunslinger-aggro-vanessa" },
-          { name: "bazaar-builds · Ammo Vanessa 10-0（Hayato_）", url: "https://bazaar-builds.net/ammo-vanessa-10-0-build-hayato_/" },
-          { name: "bazaar-builds · Ammo Vanessa 10 胜（seanX）", url: "https://bazaar-builds.net/ammo-vanessa-10-win-build-seanx/" }
+          { name: "Kripp · Gunslinger Aggro Vanessa（S15，06-07 更新）", url: "https://mobalytics.gg/the-bazaar/builds/gunslinger-aggro-vanessa" },
+          { name: "Mobalytics · Knife Repeater Vanessa（步枪×飞刀互踩）", url: "https://mobalytics.gg/the-bazaar/builds/knife-repeater-vanessa" },
+          { name: "Kripp · Infinite Blunderbuss Vanessa（雷铳自点火）", url: "https://mobalytics.gg/the-bazaar/builds/infinite-blunderbuss-vanessa" }
         ]
       },
       {
@@ -141,20 +142,21 @@ window.GUIDE_DATA = {
         ]
       },
       {
-        name: "Scimitar of the Deep 暴击毒（武器线）", tier: "T1", onset: "Day 5–8 看暴击件成型",
-        desc: "深海弯刀单独成轴的版本：暴击时按伤害的 20% 施毒、被加速时还给全体毒件加毒。走武器线时靠 Sharkclaws/Handaxe 喂伤害、Star Chart/Wanted Poster 喂暴击；它同时也是弹药快攻的后期出口，两条线可以无缝互转。打不成可平滑转入 Oni Mask 灼烧慢热流。",
+        name: "Slumbering Primordial 克苏鲁", tier: "T1.5", onset: "Day 6+ 摸到巨兽定轴，前期小水族铺场",
+        desc: "国服俗称克苏鲁：沉睡的太古巨兽自带 4 连发，你每次施毒 / 冻结 / 灼烧都给它充能 1–2 秒并永久 +20/25 伤害。最佳喂食机是 Elemental Depth Charge——一发同时毒 4 + 烧 4 + 冻结，且每个其他水族给它 +1 连发；小水族异常件铺满后巨兽几乎不停转，可以自我循环到一轮带走对面。",
         cards: [
-          { en: "Scimitar of the Deep", cn: "深海弯刀：暴击转毒本体，伤害越高毒越浓", role: "core" },
-          { en: "Sharkclaws", cn: "鲨爪：出手给其他武器永久加伤，经典武器引擎", role: "engine" },
-          { en: "Star Chart", cn: "星图：相邻+暴击率+减冷却，弯刀的最佳邻居", role: "engine" },
-          { en: "Wanted Poster", cn: "通缉令：全物品+暴击率，赢人头还送双倍经验", role: "engine" },
-          { en: "Oni Mask", cn: "般若面具：暴击给灼烧件加灼烧，备用转型核心", role: "tech" },
-          { en: "Tracer Fire", cn: "技能·曳光弹：灼烧时全物品叠暴击，灼烧分支的版本强技", role: "skill" }
+          { en: "Slumbering Primordial", cn: "沉睡的太古巨兽（克苏鲁）：毒/冻/烧都给它充能+永久成长，4 连发终结者", role: "core" },
+          { en: "Elemental Depth Charge", cn: "元素深水炸弹：毒+烧+冻三联触发，水族越多连发越多", role: "core" },
+          { en: "Weather Glass", cn: "晴雨表：毒烧双触发，按你异常件数量叠连发", role: "engine" },
+          { en: "Clamera", cn: "蛤蜊相机：开战自动使用的减速起手件", role: "engine" },
+          { en: "Yeti Crab", cn: "雪人蟹：冻结+给相邻毒件喂毒", role: "filler" },
+          { en: "Zoarcid", cn: "绵鳚：灼烧时自充能、加速相邻的水族润滑剂", role: "filler" }
         ],
-        ceiling: "暴击率达标后中毒指数级叠加，融化高血量再生队。",
-        floor: "暴击件不到位时毒量不够看，需要中途止损转灼烧或并入弹药线。",
+        ceiling: "异常触发频率堆起来后巨兽近乎无限连转，一轮 4 连发带走一个站场队。",
+        floor: "黄金大件 Day 6 后才可见，没摸到巨兽时只是软水族盘；实战记录多为 12.x–13.x（15.0 补丁未改动该卡，S15 热度待验证）。",
         sources: [
-          { name: "Mobalytics · S15 Meta Builds（Vanessa：Scimitar of the Deep）", url: "https://mobalytics.gg/the-bazaar/guides/meta-builds" }
+          { name: "Kripp · Slumbering Primordial Vanessa（02-15 更新）", url: "https://mobalytics.gg/the-bazaar/builds/slumbering-primordial-vanessa-kripp" },
+          { name: "bazaar-builds · Slumbering Primordial 10-5（chongdae，01-16）", url: "https://bazaar-builds.net/slumbering-primordial-vanessa-10-5-build-chongdae/" }
         ]
       }
     ],
@@ -176,13 +178,14 @@ window.GUIDE_DATA = {
         ],
         tips: ["S15 Rifle 改成 2 秒冷却但成长减半——老攻略里的 Day 1 Rifle+Ramrod 开局已不是最优，快速武器更稳", "输 1–2 场不致命，连续掉大血才需要立刻补强度"] },
       { key: "m", name: "中期", days: "Day 5–9",
-        goals: ["四选一定型：弹药快攻 / 旗舰杂货 / Tortuga 水族 / 暴击毒", "弹药线检查表：Pistol Sword + Holsters 到手、弹药技能拿到两个，就可以全押", "Day 9 前 5–6 胜，核心件上第一个附魔（武器系优先 Deadly 暴击向）"],
+        goals: ["四选一定型：弹药互踩 / 旗舰杂货 / Tortuga 水族 / 克苏鲁", "互踩线检查表：Repeater + Throwing Knives 成对到手、暴击源（鸦巢/技能）开始堆，就可以全押", "Day 9 前 5–6 胜，核心件上第一个附魔（互踩线优先 Deadly 暴击向）"],
         picks: [
-          { en: "Pistol Sword", cn: "弹药线胜负手，黄金货架重点搜寻", role: "core" },
-          { en: "Holsters", cn: "弹药链的启动器，和手枪剑成对收", role: "core" },
-          { en: "Scimitar of the Deep", cn: "弯刀：暴击毒与弹药线通用的后期出口", role: "core" },
-          { en: "Tortuga", cn: "水族线核心，见到即可定轴", role: "core" },
-          { en: "Powder Horn", cn: "弹药后勤，链条转速的关键", role: "engine" }
+          { en: "Repeater", cn: "连发步枪：互踩线胜负手，白银起重点搜寻", role: "core" },
+          { en: "Throwing Knives", cn: "飞刀：与步枪成对收，单独一把也是优质暴击跟射", role: "core" },
+          { en: "Crow's Nest", cn: "鸦巢：互踩线的暴击地基，越早立起来越好", role: "engine" },
+          { en: "Pistol Sword", cn: "手枪剑：弹药触发的伤害放大器", role: "core" },
+          { en: "Slumbering Primordial", cn: "克苏鲁：黄金大件，见到且有水族底子即可定轴", role: "core" },
+          { en: "Tortuga", cn: "水族线核心，见到即可定轴", role: "core" }
         ],
         shops: [
           { s: "技能商人（弹药/暴击）", why: "弹药线一半的强度在技能上，值得连刷" },
@@ -192,11 +195,11 @@ window.GUIDE_DATA = {
         ],
         tips: ["Day 8 仍没拼出弹药/水族核心 → 旗舰杂货是永远的保底答案，沉没成本最害人"] },
       { key: "l", name: "后期", days: "Day 10+",
-        goals: ["核心升品到钻石、补第二/第三附魔", "暴击率拉满：Star Chart / Wanted Poster / Sharpshooter 三件套", "补反制：Tripwire 减速、抗冻结附魔（Radiant），防止手枪剑/旗舰被点名"],
+        goals: ["核心升品到钻石、补第二/第三附魔", "暴击率拉到 100%：鸦巢 + Sharpshooter / Parting Shot——这是步枪×飞刀无限互踩的阈值", "补反制：Tripwire 减速、抗冻结附魔（Radiant），防止步枪/旗舰被点名"],
         picks: [
           { label: "核心高品复制件", cn: "同名核心高品阶替换，优先级最高", role: "core" },
-          { en: "Throwing Knives", cn: "暴击跟射，后期每一刀都带它一刀", role: "engine" },
-          { en: "Star Chart", cn: "暴击与转速双修的后期标配", role: "engine" },
+          { en: "Blunderbuss", cn: "雷铳：钻石货架的循环上限件，配燃烧弹药自点火", role: "core" },
+          { en: "Crow's Nest", cn: "鸦巢：100% 暴击阈值的最后一块", role: "engine" },
           { en: "Tripwire", cn: "对快攻/循环队的标准答案", role: "tech" }
         ],
         shops: [
@@ -207,7 +210,7 @@ window.GUIDE_DATA = {
         tips: ["弹药队后期最怕冻结点名手枪剑——给核心留 Radiant（减冻结/减速）或备好第二出口"] }
     ],
     bounds: {
-      up: "上限：弹药快攻成型后的爆发自成一档，旗舰/水族/暴击毒三条备线也都能稳进 10 胜——S15 海盗的上限是 T0 级的。",
+      up: "上限：弹药互踩闭环后的爆发自成一档，旗舰/水族/克苏鲁三条备线也都能稳进 10 胜——S15 海盗的上限是 T0 级的。",
       down: "下限：新手最友好的职业之一，杂凑武器也有 6–8 胜底子；真正的败因通常是中期不肯定轴，四头下注全是半成品。"
     }
   },
@@ -327,9 +330,9 @@ window.GUIDE_DATA = {
   /* ───────────────────────── 3. DOOLEY 机宝 ───────────────────────── */
   {
     id: "dooley", en: "Dooley", cn: "杜利", nick: "机宝", hue: "#5CC8E8",
-    tagline: "核心体系 · 科技小件 · 公式化运营",
+    tagline: "核心体系 · 全能核弱点 · 公式化运营",
     tier: "T1", difficulty: 1,
-    s15: "机宝三大核心线全部健在：<b>Dooltron（杜利特隆）</b>1000/2000 裸伤+全异常充能仍是顶级；<b>Launcher Core（发射核心）</b>带飞一切快速循环；<b>Weaponized Core（武装核心）</b>稳健自成长，S15 的最佳宿主是 <b>Pulse Rifle</b>（贴着伙伴时 Multicast 翻倍）。本季新红利：<b>等级 11 多送一次保底核心升级</b>；<b>Railgun</b> 解除任务锁并改为 +2 Multicast（注意本站卡面快照仍显示旧版任务，以游戏内为准）；Flamethrower 灼烧翻倍。公式化吃野 + 升级奖励选核心，依旧是下限最高、最推荐萌新的职业。",
+    s15: "机宝核心线全部健在：<b>Dooltron（杜利特隆）</b>1000/2000 裸伤+全异常充能仍是顶级；<b>Launcher Core（发射核心）</b>带飞一切快速循环；<b>Weaponized Core（武装核心）</b>稳健自成长，S15 的最佳宿主是 <b>Pulse Rifle</b>（贴着伙伴时 Multicast 翻倍）；国服招牌的<b>全能核弱点流（The Core + Weakpoint Detector）</b>机制在本版本依旧成立，见下方流派卡。本季新红利：<b>等级 11 多送一次保底核心升级</b>；<b>Railgun</b> 解除任务锁并改为 +2 Multicast（本站卡面快照仍显示旧版任务，以游戏内为准）；Flamethrower 灼烧翻倍。公式化吃野 + 升级奖励选核心，依旧是下限最高、最推荐萌新的职业。",
     builds: [
       {
         name: "Dooltron 伙伴机甲", tier: "T0.5", onset: "Day 4–7 视核心/伙伴到位",
@@ -381,11 +384,29 @@ window.GUIDE_DATA = {
         sources: [
           { name: "Kripp · Weaponized Core Dooley", url: "https://mobalytics.gg/the-bazaar/builds/weaponized-core-dooley-kripp" }
         ]
+      },
+      {
+        name: "The Core 全能核弱点流", tier: "T1", onset: "Day 4–7 拼三段泵，国服招牌打法",
+        desc: "国服社区的招牌体系（济海全能核连续 10 胜记录）：The Core（全能核）出手给右侧全部物品充能、左侧任意物品使用又给它回充——不挑队友的百搭心脏。Cool LEDs 在你使用核心时充能并放出减速，Weakpoint Detector（弱点探测器）吃减速充能、每跳给全武器永久加伤——『开火→减速→弱点成长』三段泵，把任意重炮喂成斩杀线。",
+        cards: [
+          { en: "The Core", cn: "全能核：充右侧全部+被左侧回充，百搭引擎心脏", role: "core" },
+          { en: "Weakpoint Detector", cn: "弱点探测器：减速时充能，每跳给全武器永久加伤的成长泵", role: "core" },
+          { en: "Cool LEDs", cn: "炫彩灯条：用核心就充能，把每次开火转成减速", role: "engine" },
+          { en: "Hammlet", cn: "小锤锤：减速时充能的高频小炮，吃满弱点成长", role: "engine" },
+          { en: "Chemsnail", cn: "化学蜗牛：减速时充能的毒出口（毒变体）", role: "engine" },
+          { en: "Pulse Rifle", cn: "脉冲步枪：挂在成长链末端的主炮位", role: "engine" }
+        ],
+        ceiling: "三段泵转起来后全武器每一秒都在变强，后期单发数值滚到夸张。",
+        floor: "核心/灯条/弱点三件缺一不可，缺件时只是普通核心队；该体系为国服长青打法，15.0 补丁未改动相关卡（机制已对照当前卡面验证）。",
+        sources: [
+          { name: "bilibili · 济海《机宝全能核 7 连 10 胜记录》", url: "https://www.bilibili.com/video/BV1MLEnzBEXx/" },
+          { name: "The Bazaar Wiki · The Core（最百搭的 Core）", url: "https://thebazaar.wiki.gg/wiki/The_Core" }
+        ]
       }
     ],
     phases: [
       { key: "e", name: "前期", days: "Day 1–4",
-        goals: ["升级奖励里选定核心方向（武装核稳 / 发射核上限）", "围绕核心堆相邻触发小件，机宝前期盘面天生成型", "公式化吃野：机宝是全职业前期打野最稳的，经验金币双吃"],
+        goals: ["升级奖励里选定核心方向（武装核稳 / 发射核上限 / 全能核百搭）", "围绕核心堆相邻触发小件，机宝前期盘面天生成型", "公式化吃野：机宝是全职业前期打野最稳的，经验金币双吃"],
         picks: [
           { en: "Weaponized Core", cn: "稳健线核心方向（升级奖励或货架）", role: "core" },
           { en: "Launcher Core", cn: "上限线核心方向", role: "core" },
@@ -404,9 +425,10 @@ window.GUIDE_DATA = {
         goals: ["确认终结点：飞核找 Ice 9000/液氮锤，伙伴线找 Dooltron+引擎伙伴", "附魔节点：核心上 Turbo（加速）或 Shielded（护盾）系", "Day 9 前 5–6 胜，循环必须基本闭合"],
         picks: [
           { en: "Dooltron", cn: "见到可直接升级流派上限", role: "core" },
-          { en: "Ice 9000", cn: "飞核终结点之一", role: "engine" },
-          { en: "Nitrogen Hammer", cn: "飞核终结点之二，二选一即可", role: "engine" },
-          { en: "Pulse Rifle", cn: "武装核线的输出宿主", role: "engine" },
+          { en: "The Core", cn: "全能核：配上弱点探测器即可定轴国服打法", role: "core" },
+          { en: "Weakpoint Detector", cn: "弱点探测器：与全能核/减速件成套收", role: "core" },
+          { en: "Ice 9000", cn: "飞核终结点（与液氮锤二选一）", role: "engine" },
+          { en: "Pulse Rifle", cn: "武装核/全能核两线通用的输出宿主", role: "engine" },
           { en: "Z-Shield", cn: "防御缺口用护盾补", role: "tech" }
         ],
         shops: [
@@ -440,14 +462,14 @@ window.GUIDE_DATA = {
     id: "mak", en: "Mak", cn: "马克", nick: "药剂师", hue: "#8FD68F",
     tagline: "药水引擎 · 灼烧焚诀 · 毒爆一刀",
     tier: "T0", difficulty: 5,
-    s15: "马克的三条主轴被 Mobalytics S15 全部点名：<b>Eternal Torch（永恒火炬）焚诀</b>、<b>Poppy Field（罂粟田）毒武器</b>、<b>Plague Glaive（瘟疫关刀）毒爆</b>。注意两个数据点：<b>Library（图书馆）</b>重做后武器冷却 +1/+1.5 秒、只给非武器减冷却——老的图书馆武器流别再抄；<b>Book of Secrets</b> 现为白银、每天白送一个随机英雄技能，依旧是马克的版本福利。上限仍是天花板，但更吃手了。",
+    s15: "马克的三条主轴被 Mobalytics S15 全部点名：<b>Eternal Torch（永恒火炬）焚诀</b>、<b>Poppy Field（罂粟田）毒武器</b>、<b>Plague Glaive（瘟疫关刀）毒爆</b>。15.0 的三个数据点：<b>Library（图书馆）</b>现在只为非武器减冷却（武器冷却惩罚已移除，但武器流依旧无收益，老的图书馆武器流别抄）；<b>Athanor 不再产出催化剂</b>（本站卡面快照仍是旧描述）；<b>Book of Secrets</b> 回白银、每天白送一个随机英雄技能，依旧是版本福利。上限仍是天花板，但更吃手了。",
     builds: [
       {
         name: "Eternal Torch 焚诀", tier: "T0.5", onset: "Day 5–8 找到火炬定轴",
-        desc: "永恒火炬为轴的灼烧体系，国服『马克焚诀』本体。药水/试剂高频触发推灼烧层数；Athanor（黄金品阶）给相邻装弹、用药剂就追加灼烧，还每天送催化剂，是体系一致性的来源。",
+        desc: "永恒火炬为轴的灼烧体系，国服『马克焚诀』本体。药水/试剂高频触发推灼烧层数；Athanor（黄金品阶）给相邻装弹、用药剂就追加灼烧，是体系一致性的来源（15.0 起不再产催化剂）。",
         cards: [
           { en: "Eternal Torch", cn: "永恒火炬：5 秒一跳的灼烧核心，焚诀的火种", role: "core" },
-          { en: "Athanor", cn: "炼金炉：装弹+用药剂追灼烧+每天送催化剂（黄金品阶）", role: "engine" },
+          { en: "Athanor", cn: "炼金炉：给相邻装弹+用药剂追加灼烧（黄金品阶；15.0 起不再产催化剂）", role: "engine" },
           { en: "Boiling Flask", cn: "沸腾烧瓶：给相邻药水装弹+Multicast", role: "engine" },
           { en: "Sleeping Potion", cn: "安眠药水：单发减速最慢敌件 3–6 秒，争取烧的时间", role: "tech" },
           { en: "Atmospheric Sampler", cn: "大气采样器：附魔/飞行物品互相充能的联动支援", role: "filler" },
@@ -524,7 +546,7 @@ window.GUIDE_DATA = {
           { s: "精英怪", why: "中期盘面起来后再开始搏高收益" },
           { s: "综合商人（黄金）", why: "捡 off-hero 强力武器补毒爆线" }
         ],
-        tips: ["S15 重要勘误：Library 重做后武器冷却反而 +1 秒以上、只加速非武器——老攻略的图书馆武器流别照抄"] },
+        tips: ["S15 重要勘误：Library 现在只给非武器减冷却、对武器既无惩罚也无收益（15.0 移除了武器冷却惩罚）——老攻略的图书馆武器流仍然别抄"] },
       { key: "l", name: "后期", days: "Day 10+",
         goals: ["毒爆线：把斩杀数值堆过『当前最肉对手的血量』，然后才考虑速度", "焚诀线：灼烧覆盖率+控制链，专心拖死对面", "复盘对手池：马克后期理论打谁都赢，输只输在配置错位"],
         picks: [

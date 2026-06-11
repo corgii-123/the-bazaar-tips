@@ -72,7 +72,8 @@ python3 scripts/fetch_data.py   # 仅标准库，重写 data/all_items.json 与 
 | 快照滞后 | howbazaar 未完全同步 S15（Patch 15.x）改动：已确认 Rifle（现 2s 冷却/成长减半）、Railgun（已解任务锁、+2 Multicast）、Spice Rack（重做为灼烧增幅）等与快照不符。**冲突处一律以游戏内为准**，攻略文本里已按 S15 实况书写并标注 |
 | Karnok DLC | howbazaar 数据源未收录 Karnok 物品/技能（仅 Jerky 一件）。攻略页 Karnok 卡片多为文字芯片；Waystones、Dual Reaver 已按 [bazaardb.gg](https://bazaardb.gg) 数据补录于 supplement.json |
 | 卡面图片 | 热链自 howbazaar.gg（主源，已验证可访问）；mobalytics CDN 作为浏览器端备用源 |
-| 攻略出处 | [Mobalytics S15 Meta Builds](https://mobalytics.gg/the-bazaar/guides/meta-builds)、[Kripparrian 构筑](https://mobalytics.gg/the-bazaar/kripparrian)、[bazaar-builds.net 10 胜构筑库](https://bazaar-builds.net/) 等，正文与各流派卡均带链接 |
+| 攻略出处 | [Mobalytics S15 Meta Builds](https://mobalytics.gg/the-bazaar/guides/meta-builds)、[Kripparrian 构筑](https://mobalytics.gg/the-bazaar/kripparrian)、[bazaar-builds.net 10 胜构筑库](https://bazaar-builds.net/)、B 站国服攻略（济海等），正文与各流派卡均带链接 |
+| 来源时效规则 | **流派只采用 S14/S15（Patch 14.x–15.x，2026-04 起）来源**；更早赛季的实战记录仅在机制经当前卡面数据验证后作为补充，并在来源/下限处标注赛季。旧赛季攻略大量过时（如图书馆武器流、刷钱猪、旧旗舰机制），引用前必须先对版本 |
 
 ## 版权声明
 

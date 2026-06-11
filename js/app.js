@@ -252,7 +252,10 @@
 
   /* ── 悬浮卡面 ── */
   const tip = () => document.getElementById("cardTip");
+  // 触屏设备没有 hover：跳过悬浮卡面（统一走点击弹窗），CSS 侧也有兜底
+  const canHover = () => !(window.matchMedia && window.matchMedia("(hover: none)").matches);
   function showTip(card, x, y) {
+    if (!canHover()) return;
     const t = tip();
     const tier = card.startingTier ? `${TIER_CN[card.startingTier] || ""}起` : "";
     const size = card.kind === "item" && card.size ? ` · ${SIZE_CN[card.size] || card.size}` : "";
